@@ -1,2 +1,2 @@
-# icc-assignment-2
+# iccp-assignment-2
 Polymer chains
