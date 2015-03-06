@@ -21,7 +21,7 @@ sigma = input('Sigma value of L-J potential (default: 0.5): ') or 0.5
 epsilon = input('Epsilon value of L-J potential (default: 0.5): ') or 1
 T = input('Desired temperature (default: 1): ') or 1
 plot_data = input('Plot data? (y/n, default: y): ') or 'y'
-chain_length = input('Timesteps: ') or 1000
+chain_length = input('Amount of nodal points: ') or 1000
 
 ## Message at simulation start
 start.message()
