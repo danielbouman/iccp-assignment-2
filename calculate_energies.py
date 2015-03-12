@@ -11,5 +11,5 @@ def calculate_energies(possible_beads_pos,beads_pos,epsilon,sigma):
             V = 4*epsilon*(np.power(abs_distance_squared,-6)-np.power(abs_distance_squared,-3))
             energies[ii] = energies[ii]+V
 
-    energies = np.divide(energies,1)
+    energies = np.divide(energies,2)
     return energies;

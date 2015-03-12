@@ -21,14 +21,14 @@ np.set_printoptions(threshold='nan')		# Do not truncate print
 try: input = raw_input
 except NameError: pass
 sigma = input('Sigma value of L-J potential (default: 0.5): ') or 0.8
-epsilon = input('Epsilon value of L-J potential (default: 0.5): ') or 0.25
-T = input('Temperature, expressed in epsilon (default: 1): ') or 1
+epsilon = input('Epsilon value of L-J potential (default: 0.5): ') or 5.25
+T = input('Temperature, expressed in epsilon (default: 1): ') or 0.6
 number_of_beads = input('Amount of beads per polymer: ') or 250
 plot_data = input('Plot data? (y/n, default: y): ') or 'y'
 
 
 ## Fixed parameters
-angle_dof = 12                              # Amount of different angles the polymer can move in
+angle_dof = 18                              # Amount of different angles the polymer can move in
 angles = np.linspace(0,2*np.pi,angle_dof)   # Split 2*pi radians up into angle_dof amount of slices
 
 ## Message at simulation start
