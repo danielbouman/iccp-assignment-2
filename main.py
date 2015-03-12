@@ -46,8 +46,7 @@ for N in range(0, number_of_nodal_points-1):
     plot_nodal_points = np.zeros((N+1,2),dtype=float)                             # this block is used to plot the polymer as it grows, only for tesing purposes
     plot_nodal_points = nodal_points[0:(N+1)]
 
-    energies = calculate_energies(nodal_points[N,:],)
-
+    #energies = calculate_energies(nodal_points[N,:],    )
     #plt.scatter(plot_nodal_points[:,0],plot_nodal_points[:,1])
     #plt.plot(plot_nodal_points[:,0],plot_nodal_points[:,1])
     #plt.axis([-7, 7, -7, 7])
