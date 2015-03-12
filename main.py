@@ -9,7 +9,7 @@ import numpy as np		                               # import numpy
 # from mpl_toolkits.mplot3d import Axes3D		           # plotting tools
 import sys                                             # progress messages
 import running as start                                # startup message
-from new_bead_positions import new_bead_pos          # data export for physcial quantities
+from new_beads_positions import new_beads_pos          # data export for physcial quantities
 
 ## Global settings
 np.set_printoptions(threshold='nan')		# Do not truncate print
@@ -33,14 +33,14 @@ angles = np.linspace(0,2*np.pi,angle_dof)   # Split 2*pi radians up into angle_d
 start.message()
 
 beads_pos = np.zeros((number_of_beads,2),dtype=float)  # initialize all bead positions
-posssible_bead_pos = np.zeros((len(angles),2),dtype=float)   # initialize list for all possible positions of the next bead
+possible_beads_pos = np.zeros((len(angles),2),dtype=float)   # initialize list for all possible positions of the next bead
 
 
 for N in range(0, number_of_beads-1):
-    possible_bead_pos = new_bead_pos(bead_pos[N,:],angles)  # calculate all possible nodal points
-    bead_pos[N+1,:] = possible_bead_pos[0,:]                              # choose first of all possible nodal points, so polymer is a random 2D walk at the moment. FOR TESTING ONLY!!
+    possible_bead_pos = new_beads_pos(beads_pos[N,:],angles)  # calculate all possible nodal points
+    beads_pos[N+1,:] = possible_beads_pos[0,:]                              # choose first of all possible nodal points, so polymer is a random 2D walk at the moment. FOR TESTING ONLY!!
 
-    plot_bead_pos = np.zeros((N+1,2),dtype=float)                             # this block is used to plot the polymer as it grows, only for tesing purposes
-    plot_bead_pos = bead_pos[0:(N+1)]
+    plot_beads_pos = np.zeros((N+1,2),dtype=float)                             # this block is used to plot the polymer as it grows, only for tesing purposes
+    plot_beads_pos = beads_pos[0:(N+1)]
 
     
