@@ -21,8 +21,7 @@ except NameError: pass
 sigma = input('Sigma value of L-J potential (default: 0.5): ') or 0.5
 epsilon = input('Epsilon value of L-J potential (default: 0.5): ') or 1
 T = input('Temperature, expressed in epsilon (default: 1): ') or 1
-number_of_nodal_points = input('Amount of nodal points: ') or 20
-chain_length = input('Length of each chain (in sigma, default = 2): ') or 2
+number_of_beads = input('Amount of beads per polymer: ') or 20
 plot_data = input('Plot data? (y/n, default: y): ') or 'y'
 
 
@@ -41,7 +40,7 @@ for N in range(0, number_of_nodal_points-1):
 
 
 
-    possible_nodal_points = new_nodal_pos(nodal_points[N,:],angles,chain_length)  # calculate all possible nodal points
+    possible_nodal_points = new_nodal_pos(nodal_points[N,:],angles)  # calculate all possible nodal points
     nodal_points[N+1,:] = possible_nodal_points[0,:]                              # choose first of all possible nodal points, so polymer is a random 2D walk at the moment. FOR TESTING ONLY!!
     plot_nodal_points = np.zeros((N+1,2),dtype=float)                             # this block is used to plot the polymer as it grows, only for tesing purposes
     plot_nodal_points = nodal_points[0:(N+1)]
