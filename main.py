@@ -5,8 +5,8 @@
 ## Import modules
 from __future__ import print_function                  # make print function work in python 2.x
 import numpy as np		                               # import numpy
-import matplotlib.pyplot as plt 			           # plotting tools
-from mpl_toolkits.mplot3d import Axes3D		           # plotting tools
+# import matplotlib.pyplot as plt 			           # plotting tools
+# from mpl_toolkits.mplot3d import Axes3D		           # plotting tools
 import sys                                             # progress messages
 import running as start                                # startup message
 from new_nodal_positions import new_nodal_pos          # data export for physcial quantities
@@ -38,9 +38,6 @@ posssible_nodal_points = np.zeros((len(angles),2),dtype=float)   # initialize li
 
 
 for N in range(0, number_of_nodal_points-1):
-
-
-
     possible_nodal_points = new_nodal_pos(nodal_points[N,:],angles,chain_length)  # calculate all possible nodal points
     nodal_points[N+1,:] = possible_nodal_points[0,:]                              # choose first of all possible nodal points, so polymer is a random 2D walk at the moment. FOR TESTING ONLY!!
     plot_nodal_points = np.zeros((N+1,2),dtype=float)                             # this block is used to plot the polymer as it grows, only for tesing purposes
@@ -52,7 +49,7 @@ for N in range(0, number_of_nodal_points-1):
     #plt.axis([-7, 7, -7, 7])
     #plt.show()
 
-plt.scatter(plot_nodal_points[:,0],plot_nodal_points[:,1])
-plt.plot(plot_nodal_points[:,0],plot_nodal_points[:,1])
-plt.axis([-12, 12, -12, 12])
-plt.show()
+# plt.scatter(plot_nodal_points[:,0],plot_nodal_points[:,1])
+# plt.plot(plot_nodal_points[:,0],plot_nodal_points[:,1])
+# plt.axis([-12, 12, -12, 12])
+# plt.show()
