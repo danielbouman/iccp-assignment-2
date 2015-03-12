@@ -5,11 +5,11 @@
 ## Import modules
 from __future__ import print_function                  # make print function work in python 2.x
 import numpy as np		                               # import numpy
-import matplotlib.pyplot as plt 			           # plotting tools
-from mpl_toolkits.mplot3d import Axes3D		           # plotting tools
+# import matplotlib.pyplot as plt 			           # plotting tools
+# from mpl_toolkits.mplot3d import Axes3D		           # plotting tools
 import sys                                             # progress messages
 import running as start                                # startup message
-from new_nodal_positions import new_nodal_pos          # data export for physcial quantities
+from new_bead_positions import new_bead_pos          # data export for physcial quantities
 
 ## Global settings
 np.set_printoptions(threshold='nan')		# Do not truncate print
@@ -32,26 +32,15 @@ angles = np.linspace(0,2*np.pi,angle_dof)   # Split 2*pi radians up into angle_d
 ## Message at simulation start
 start.message()
 
-nodal_points = np.zeros((number_of_nodal_points,2),dtype=float)  # initialize all nodal point positions
-posssible_nodal_points = np.zeros((len(angles),2),dtype=float)   # initialize list for all possible positions of the next nodal point
+beads_pos = np.zeros((number_of_beads,2),dtype=float)  # initialize all bead positions
+posssible_bead_pos = np.zeros((len(angles),2),dtype=float)   # initialize list for all possible positions of the next bead
 
 
-for N in range(0, number_of_nodal_points-1):
+for N in range(0, number_of_beads-1):
+    possible_bead_pos = new_bead_pos(bead_pos[N,:],angles)  # calculate all possible nodal points
+    bead_pos[N+1,:] = possible_bead_pos[0,:]                              # choose first of all possible nodal points, so polymer is a random 2D walk at the moment. FOR TESTING ONLY!!
 
+    plot_bead_pos = np.zeros((N+1,2),dtype=float)                             # this block is used to plot the polymer as it grows, only for tesing purposes
+    plot_bead_pos = bead_pos[0:(N+1)]
 
-
-    possible_nodal_points = new_nodal_pos(nodal_points[N,:],angles)  # calculate all possible nodal points
-    nodal_points[N+1,:] = possible_nodal_points[0,:]                              # choose first of all possible nodal points, so polymer is a random 2D walk at the moment. FOR TESTING ONLY!!
-    plot_nodal_points = np.zeros((N+1,2),dtype=float)                             # this block is used to plot the polymer as it grows, only for tesing purposes
-    plot_nodal_points = nodal_points[0:(N+1)]
-
-    #energies = calculate_energies(nodal_points[N,:],    )
-    #plt.scatter(plot_nodal_points[:,0],plot_nodal_points[:,1])
-    #plt.plot(plot_nodal_points[:,0],plot_nodal_points[:,1])
-    #plt.axis([-7, 7, -7, 7])
-    #plt.show()
-
-plt.scatter(plot_nodal_points[:,0],plot_nodal_points[:,1])
-plt.plot(plot_nodal_points[:,0],plot_nodal_points[:,1])
-plt.axis([-12, 12, -12, 12])
-plt.show()
+    
