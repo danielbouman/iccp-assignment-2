@@ -1,7 +1,6 @@
 """
 
 """
-
 ## Import modules
 from __future__ import print_function                  # make print function work in python 2.x
 import numpy as np		                               # import numpy
