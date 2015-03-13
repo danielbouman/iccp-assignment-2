@@ -21,8 +21,8 @@ np.set_printoptions(threshold='nan')		# Do not truncate print
 try: input = raw_input
 except NameError: pass
 sigma = input('Sigma value of L-J potential (default: 0.5): ') or 0.8
-epsilon = input('Epsilon value of L-J potential (default: 0.5): ') or 5.25
-T = input('Temperature, expressed in epsilon (default: 1): ') or 0.6
+epsilon = input('Epsilon value of L-J potential (default: 0.5): ') or 7.25
+T = input('Temperature, expressed in epsilon (default: 1): ') or 1
 number_of_beads = input('Amount of beads per polymer: ') or 250
 plot_data = input('Plot data? (y/n, default: y): ') or 'y'
 
@@ -40,7 +40,7 @@ possible_beads_pos = np.zeros((len(angles),2),dtype=float)   # initialize list f
 
 for N in range(0, number_of_beads-1):
     possible_beads_pos = new_beads_pos(beads_pos[N,:],angles)  # calculate all possible nodal points
-    energies = calculate_energies(possible_beads_pos,beads_pos[0:(N+1)],epsilon,sigma)
+    energies = calculate_energies(possible_beads_pos,beads_pos[0:N],epsilon,sigma)
     #beads_pos[1,0]
     #print(energies[0])
     #print(energies[1])
