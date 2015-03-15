@@ -21,14 +21,13 @@ import numpy as np
 def init(size):
     global grid
     grid = {}
-    for n in range(size):
+    for n in range(size):       # Create grid
         for m in range(size):
             grid['g' + str(n) + str(m)] = []
 
 def store(pos,n):
     global grid_pos
-    grid_pos = np.floor_divide(pos,0.5).astype(int)
-    grid_pos = 'g'+''.join(str(e) for e in grid_pos)
+    grid_pos = 'g'+''.join(str(e) for e in np.floor_divide(pos,0.5).astype(int))
     grid[grid_pos].append(n)
     
 def get(pos,cutoff):
