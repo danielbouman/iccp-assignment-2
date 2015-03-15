@@ -1,8 +1,17 @@
 # Import libraries and modules
-import numpy as np		                               # import numpy
-from new_beads_positions import new_beads_pos          # calculate possible new bead positions
-from calculate_energies import calculate_energies      # calculate energies for each new possible bead position
-from determine_new_bead import determine_new_bead      # function used to determine the final bead position by comparing the boltzmann factors
+import numpy as np		                            # import numpy  
+# import sys                                          # progress messages
+from new_beads_positions import new_beads_pos       # calculate possible new bead positions
+from calculate_energies import calculate_energies   # calculate energies for each new possible bead position
+from determine_new_bead import determine_new_bead   # function used to determine the final bead position by comparing the boltzmann factors
+
+def user_input():
+    sigma = input('Sigma value of L-J potential (default: 0.5): ') or 0.8
+    epsilon = input('Epsilon value of L-J potential (default: 0.5): ') or 7.25
+    T = input('Temperature, expressed in epsilon (default: 1): ') or 1
+    number_of_beads = input('Amount of beads per polymer: ') or 250
+    plot_data = input('Plot data? (y/n, default: y): ') or 'y'
+    return sigma, epsilon, T, number_of_beads, plot_data
 
 def start(number_of_beads,sigma,epsilon,T):
     ## Fixed parameters
@@ -25,3 +34,12 @@ def start(number_of_beads,sigma,epsilon,T):
         #plot_beads_pos = np.zeros((N+1,2),dtype=float)                             # this block is used to plot the polymer as it grows, only for tesing purposes
         #plot_beads_pos = beads_pos[0:(N+1)]
     return beads_pos
+
+def plot(beads_pos):
+    import matplotlib.pyplot as plt 			           # plotting tools
+    
+    plt.plot(beads_pos[:,0],beads_pos[:,1], 'b')
+    plt.plot(beads_pos[:,0],beads_pos[:,1], '.r')
+    #plt.axis([-1*(number_of_beads), number_of_beads, -1*(number_of_beads), number_of_beads])
+    
+    plt.show()
