@@ -21,8 +21,8 @@ import numpy as np
 def init(size):
     global grid
     grid = {}
-    for n in range(size):       # Create grid
-        for m in range(size):
+    for n in range(size*2):       # Create grid
+        for m in range(size*2):
             grid['g' + str(n) + str(m)] = []
 
 def store(pos,n):
@@ -47,17 +47,17 @@ def show():
 """
 Testing:
 """
-init(10)
+# init(10)
 
-store([0.1,0.5],1)
-store([0.5,1.1],2)
-store([0.4,2],3)
-store([2.2,4.3],4)
-store([2.4,4],5)
-store([2.6,4],6)
-store([2.4,3.6],7)
-store([1.4,0],8)
-store([2.4,1],9)
+# store([0.1,0.5],1)
+# store([0.5,1.1],2)
+# store([0.4,2],3)
+# store([2.2,4.3],4)
+# store([2.4,4],5)
+# store([2.6,4],6)
+# store([2.4,3.6],7)
+# store([1.4,0],8)
+# store([2.4,1],9)
 
-rel_beads = get([2.4,4],1)
-print(rel_beads)
+# rel_beads = get([2.4,4],1)
+# print(rel_beads)
