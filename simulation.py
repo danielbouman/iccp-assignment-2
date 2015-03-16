@@ -15,7 +15,7 @@ def user_input():
 
 def start(number_of_beads,sigma,epsilon,T):
     ## Fixed parameters
-    angle_dof = 6                              # Amount of different angles the polymer can move in
+    angle_dof = 6                               # Amount of different angles the polymer can move in
     angles = np.linspace(0,2*np.pi,angle_dof)   # Split 2*pi radians up into angle_dof amount of slices
     
     beads_pos = np.zeros((number_of_beads,2),dtype=float)  # initialize all bead positions
