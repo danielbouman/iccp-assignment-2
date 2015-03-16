@@ -17,6 +17,6 @@ def new_beads_pos(previous_beads_pos, angles):
     #possible_beads_pos[:,0] =  previous_beads_pos[0] + possible_rel_prev_beads_pos[:,0] # calculate absolute x - positions
     #possible_beads_pos[:,1] =  previous_beads_pos[1] + possible_rel_prev_beads_pos[:,1] # calculate absolute y - positions
 
-    possible_beads_pos[:,:] =  previous_beads_pos[:] + possible_rel_prev_beads_pos[:,:] # calculate absolute y - positions
+    possible_beads_pos[:,:] =  previous_beads_pos[:] + possible_rel_prev_beads_pos[:,:] # calculate absolute position
 
     return possible_beads_pos;
