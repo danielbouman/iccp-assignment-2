@@ -17,7 +17,4 @@ def determine_new_bead(energies,T):
         if cumsum_probabilities[ii] > RNG:
             break
 
-    new_bead_index = ii
-
-
-    return new_bead_index;
+    return ii;

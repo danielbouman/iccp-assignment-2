@@ -20,6 +20,6 @@ def new_beads_pos(previous_beads_pos, angles1,angles2):
             possible_rel_prev_beads_pos[ii,iii,1] = np.sin(angles1[ii])*np.sin(angles2[iii])
             possible_rel_prev_beads_pos[ii,iii,2] = np.cos(angles1[ii])
     
-    possible_beads_pos[:,:] =  previous_beads_pos[:] + possible_rel_prev_beads_pos[:,:] # calculate absolute position
+    # possible_beads_pos[:,:] =  previous_beads_pos[:] + possible_rel_prev_beads_pos[:,:] # calculate absolute position
 
-    return possible_beads_pos;
+    return previous_beads_pos[:] + possible_rel_prev_beads_pos[:,:]
