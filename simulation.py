@@ -24,7 +24,7 @@ def start(number_of_beads,sigma,epsilon,T):
 
     sigma_squared = np.square(sigma)
     
-    track.init(int(np.ceil(number_of_beads/2))) # initialize tracking
+    track.init(int(np.floor_divide(number_of_beads,2))) # initialize tracking
     
     for N in range(0, number_of_beads):
         candidate_bead_pos = new_beads_pos(excisting_bead_pos[N-1,:],angles)    # calculate all possible nodal points
