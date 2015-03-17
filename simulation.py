@@ -22,9 +22,6 @@ def start(number_of_beads,sigma,epsilon,T):
     possible_beads_pos = np.zeros((len(angles),2),dtype=float)   # initialize list for all possible positions of the next bead
 
     sigma_squared = np.square(sigma)
-
-
-    import matplotlib.pyplot as plt                        # plotting tools
     
     for N in range(0, number_of_beads):
         possible_beads_pos = new_beads_pos(beads_pos[N-1,:],angles)  # calculate all possible nodal points
@@ -36,8 +33,8 @@ def start(number_of_beads,sigma,epsilon,T):
         #print(energies[3])
         new_bead_index = determine_new_bead(energies,T)            # determine final new bead
         beads_pos[N,:] = possible_beads_pos[new_bead_index,:]    # add new final new bead to the polymer
-        plot_beads_pos = np.zeros((N+1,2),dtype=float)                             # this block is used to plot the polymer as it grows, only for tesing purposes
-        plot_beads_pos = beads_pos[0:(N+1)]
+        # plot_beads_pos = np.zeros((N+1,2),dtype=float)                             # this block is used to plot the polymer as it grows, only for tesing purposes
+        # plot_beads_pos = beads_pos[0:(N+1)]
 
         # plt.plot(plot_beads_pos[:,0],plot_beads_pos[:,1], 'b')
         # plt.plot(plot_beads_pos[:,0],plot_beads_pos[:,1], '.r')

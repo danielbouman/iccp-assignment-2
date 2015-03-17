@@ -1,0 +1,22 @@
+energies = lj_energy(possible_pos,pos,epsilon,sigma_squared,[n_possible_pos,n_beads])
+
+Wrapper for ``lj_energy``.
+
+Parameters
+----------
+possible_pos : input rank-2 array('d') with bounds (n_possible_pos,2)
+pos : input rank-2 array('d') with bounds (n_beads,2)
+epsilon : input float
+sigma_squared : input float
+
+Other Parameters
+----------------
+n_possible_pos : input int, optional
+    Default: shape(possible_pos,0)
+n_beads : input int, optional
+    Default: shape(pos,0)
+
+Returns
+-------
+energies : rank-1 array('d') with bounds (n_possible_pos)
+
