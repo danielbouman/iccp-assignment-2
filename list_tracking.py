@@ -34,8 +34,8 @@ def store(pos,n):
 def get(pos,cutoff):
     relevant_beads = []
     current_grid_pos = np.floor_divide(pos,0.5).astype(int)
-    for n in [current_grid_pos[0]-cutoff,current_grid_pos[0],current_grid_pos[0]+cutoff]:
-        for m in [current_grid_pos[1]-cutoff,current_grid_pos[1],current_grid_pos[1]+cutoff]:
+    for n in range(current_grid_pos[0]-cutoff,current_grid_pos[0]+cutoff):
+        for m in range(current_grid_pos[1]-cutoff,current_grid_pos[1]+cutoff):
             found_beads = grid['g'+str(n)+str(m)]
             if found_beads:
                 relevant_beads.extend(found_beads)
