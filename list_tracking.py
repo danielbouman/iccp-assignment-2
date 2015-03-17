@@ -22,9 +22,9 @@ def init(size):
     global grid
     grid = {}
     size = size*2
-    for n in range(-size,size):       # Create grid
-        for m in range(-size,size):
-            grid['g' + str(n) + str(m)] = []
+    for i in range(-size,size):       # Create grid
+        for j in range(-size,size):
+            grid['g' + str(i) + str(j)] = []
 
 def store(pos,n):
     global grid_pos
@@ -34,16 +34,15 @@ def store(pos,n):
 def get(pos,cutoff):
     relevant_beads = []
     current_grid_pos = np.floor_divide(pos,0.5).astype(int)
-    for n in range(current_grid_pos[0]-cutoff,current_grid_pos[0]+cutoff):
-        for m in range(current_grid_pos[1]-cutoff,current_grid_pos[1]+cutoff):
-            found_beads = grid['g'+str(n)+str(m)]
+    for i in range(current_grid_pos[0]-cutoff,current_grid_pos[0]+cutoff):
+        for j in range(current_grid_pos[1]-cutoff,current_grid_pos[1]+cutoff):
+            found_beads = grid['g'+str(i)+str(j)]
             if found_beads:
                 relevant_beads.extend(found_beads)
     return relevant_beads
             
 def show():
     print(grid)
-
 
 # """
 # Example:
