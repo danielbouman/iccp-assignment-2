@@ -43,22 +43,8 @@ def plot(beads_pos):
     import matplotlib.pyplot as plt 			           # plotting tools
     import pylab
     from mpl_toolkits.mplot3d import Axes3D
-
-
     fig = pylab.figure()
     ax = Axes3D(fig)
-
-    #ax.scatter(beads_pos[:,0], beads_pos[:,1],beads_pos[:,2])
-    #plt.scatter(beads_pos[:,0], beads_pos[:,1],beads_pos[:,2])
     plt.plot(beads_pos[:,0], beads_pos[:,1],beads_pos[:,2])
     plt.show()
-    
-
-
-
-    #plt.plot(beads_pos[:,0],beads_pos[:,1], 'b')
-    #plt.plot(beads_pos[:,0],beads_pos[:,1], '.r')
-    #plt.show()
-
-
     return
