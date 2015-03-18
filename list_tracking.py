@@ -18,7 +18,7 @@ cutoff  range within beads should be considered
 ## Import libraries
 import numpy as np
 
-def init(size):
+def init():
     global grid
     grid = {}
     # for i in range(-size,size):       # Create grid
