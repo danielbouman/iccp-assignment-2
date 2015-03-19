@@ -23,10 +23,10 @@ def user_input():
 def start(number_of_beads,sigma,epsilon,T):
     ## Fixed parameters
     angle_dof = 6                                 # Amount of different angles the polymer can move in
-    angles1 = np.linspace(0,2*np.pi,angle_dof)   # Split 2*pi radians up into angle_dof amount of slices
-    angles2 = np.linspace(0,2*np.pi,angle_dof)
-    sigma_squared = sigma*sigma
-    cutoff_length = int(2*np.ceil(1+2.5*sigma))
+    angles1 = np.linspace(0,2*np.pi,angle_dof)    # Split 2*pi radians up into angle_dof amount of slices
+    angles2 = np.linspace(0,2*np.pi,angle_dof)    # Split 2*pi radians up into angle_dof amount of slices
+    sigma_squared = sigma*sigma                   # calculate sigma squared to prevent unnecesarry calculating
+    cutoff_length = int(2*np.ceil(1+2.5*sigma))   # cutoff length is taken to be 2.5 sigma. The factor of 1 is added since we check the cutoff from the last nodal point. Factor 2 is there since we have two grids per unit distance per dimension
 
     beads_pos = np.zeros((number_of_beads,3),dtype=float)  # initialize all bead positions
     possible_beads_pos = np.zeros((len(angles1)*len(angles2),3),dtype=float)   # initialize list for all possible positions of the next bead
