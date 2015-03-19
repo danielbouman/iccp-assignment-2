@@ -24,7 +24,8 @@ def init():
 
 def store(pos,n):
     grid_pos = 'g'+''.join(str(e) for e in np.floor_divide(pos,0.5).astype(int))
-    grid[grid_pos] = []
+    if grid_pos not in grid:
+        grid[grid_pos] = []
     grid[grid_pos].append(n)
     
 def get(pos,cutoff):
