@@ -6,6 +6,7 @@ from calculate_energies import calculate_energies   # calculate energies for eac
 from calculate_energies2 import calculate_energies2   # calculate energies for each new possible bead position
 from determine_new_bead import determine_new_bead   # function used to determine the final bead position by comparing the boltzmann factors
 import list_tracking as track
+import lj_energy
 
 def user_input():
     # sigma = input('Sigma value of L-J potential (default: 0.5): ') or 0.8
@@ -23,10 +24,11 @@ def user_input():
 def start(number_of_beads,sigma,epsilon,T):
     ## Fixed parameters
     angle_dof = 6                                 # Amount of different angles the polymer can move in
-    angles1 = np.linspace(0,2*np.pi,angle_dof)    # Split 2*pi radians up into angle_dof amount of slices
-    angles2 = np.linspace(0,2*np.pi,angle_dof)    # Split 2*pi radians up into angle_dof amount of slices
-    sigma_squared = sigma*sigma                   # calculate sigma squared to prevent unnecesarry calculating
-    cutoff_length = int(2*np.ceil(1+2.5*sigma))   # cutoff length is taken to be 2.5 sigma. The factor of 1 is added since we check the cutoff from the last nodal point. Factor 2 is there since we have two grids per unit distance per dimension
+    N_candidates = angle_dof**2
+    angles1 = np.linspace(0,2*np.pi,angle_dof)   # Split 2*pi radians up into angle_dof amount of slices
+    angles2 = np.linspace(0,2*np.pi,angle_dof)
+    sigma_squared = sigma*sigma
+    cutoff_length = int(2*np.ceil(1+2.5*sigma))
 
     beads_pos = np.zeros((number_of_beads,3),dtype=float)  # initialize all bead positions
     possible_beads_pos = np.zeros((len(angles1)*len(angles2),3),dtype=float)   # initialize list for all possible positions of the next bead
@@ -38,7 +40,9 @@ def start(number_of_beads,sigma,epsilon,T):
         possible_beads_pos = new_beads_pos(beads_pos[N-1,:],angles1,angles2)  # calculate all possible nodal points
         possible_beads_pos = possible_beads_pos.reshape(-1,3)
         relevant_beads = track.get(beads_pos[N,:],cutoff_length)
-        energies = calculate_energies(possible_beads_pos,beads_pos[0:N,:],epsilon,sigma_squared,relevant_beads)
+        # energies = calculate_energies(possible_beads_pos,beads_pos[0:N,:],epsilon,sigma_squared,relevant_beads)
+        # print(N_candidates)
+        energies = lj_energy.func(beads_pos[0:N,:],possible_beads_pos,sigma_squared,epsilon,N_candidates,N)
         new_bead_index = determine_new_bead(energies,T)            # determine final new bead
         beads_pos[N,:] = possible_beads_pos[new_bead_index,:]    # add new final new bead to the polymer
         track.store(beads_pos[N,:],N)
