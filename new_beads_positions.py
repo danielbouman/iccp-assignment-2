@@ -7,7 +7,8 @@ import numpy as np
 def new_beads_pos(previous_beads_pos, angles):
     offset = 2*np.pi*(np.random.random())               # create random offset of each angle to avoid preferential angles
     angles = np.add(angles,offset)                      # add offset to all possible angles
-
+    # print("angles")
+    # print(angles)
     possible_beads_pos = np.zeros((len(angles),2),dtype=float)      # initialize the possible bead possitions, wrt the origin
     possible_rel_prev_beads_pos = np.zeros((len(angles),2),dtype=float) # initialize the possible bead positions, relative to the previous bead
 

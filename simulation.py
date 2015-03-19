@@ -15,12 +15,13 @@ def user_input():
     epsilon = 0.25
     T = 1
     number_of_beads = 150
-    plot_data = 'n'
+    plot_data = 'y'
     return float(sigma), float(epsilon), float(T), int(number_of_beads), plot_data
 
 def start(number_of_beads,sigma,epsilon,T):
+    import matplotlib.pyplot as plt     # plotting tools
     ## Fixed parameters
-    angle_dof = 6                               # Amount of different angles the polymer can move in
+    angle_dof = 360                               # Amount of different angles the polymer can move in
     angles = np.linspace(0,2*np.pi,angle_dof)   # Split 2*pi radians up into angle_dof amount of slices
     
     sigma_squared = sigma*sigma
@@ -32,6 +33,10 @@ def start(number_of_beads,sigma,epsilon,T):
         energies = lj_energy.func(existing_pos[0:N,:],candidate_pos,sigma_squared,epsilon,angle_dof,N) # calculate energies
         new_bead_index = determine_new_bead(energies,T)         # determine final new bead
         existing_pos[N,:] = candidate_pos[new_bead_index,:]    # add new final new bead to the polymer
+
+        # plt.plot(existing_pos[0:N,0],existing_pos[0:N,1], 'b')
+        #plt.plot(existing_pos[0:N,0],existing_pos[0:N,1], '.r')
+        #plt.show()
     return existing_pos
 
 def plot(beads_pos):
