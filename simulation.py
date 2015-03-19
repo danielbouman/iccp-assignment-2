@@ -37,7 +37,8 @@ def start(number_of_beads,sigma,epsilon,T):
     for N in range(1, number_of_beads):
         possible_beads_pos = new_beads_pos(beads_pos[N-1,:],angles1,angles2)  # calculate all possible nodal points
         possible_beads_pos = possible_beads_pos.reshape(-1,3)
-        energies = calculate_energies(possible_beads_pos,beads_pos[0:N,:],epsilon,sigma_squared,cutoff_length)
+        relevant_beads = track.get(beads_pos[N,:],cutoff_length)
+        energies = calculate_energies(possible_beads_pos,beads_pos[0:N,:],epsilon,sigma_squared,relevant_beads)
         new_bead_index = determine_new_bead(energies,T)            # determine final new bead
         beads_pos[N,:] = possible_beads_pos[new_bead_index,:]    # add new final new bead to the polymer
         track.store(beads_pos[N,:],N)
