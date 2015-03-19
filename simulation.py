@@ -1,10 +1,7 @@
 # Import libraries and modules
 import numpy as np		                            # import numpy  
 # import sys                                          # progress messages
-from new_beads_positions import new_beads_pos       # calculate possible new bead positions
-from calculate_energies import calculate_energies   # calculate energies for each new possible bead position
-from calculate_energies2 import calculate_energies2   # calculate energies for each new possible bead position
-from determine_new_bead import determine_new_bead   # function used to determine the final bead position by comparing the boltzmann factors
+import new_bead       # calculate possible new bead positions
 import lj_energy
 
 def user_input():
@@ -26,21 +23,20 @@ def start(number_of_beads,sigma,epsilon,T):
     N_candidates = angle_dof**2
     angles1 = np.linspace(0,2*np.pi,angle_dof)   # Split 2*pi radians up into angle_dof amount of slices
     angles2 = np.linspace(0,2*np.pi,angle_dof)
+    
     sigma_squared = sigma*sigma
     cutoff_length = int(2*np.ceil(1+2.5*sigma))
-
-    beads_pos = np.zeros((number_of_beads,3),dtype=float)  # initialize all bead positions
-    possible_beads_pos = np.zeros((len(angles1)*len(angles2),3),dtype=float)   # initialize list for all possible positions of the next bead
+    existing_pos = np.zeros((number_of_beads,3),dtype=float)  # initialize all bead positions
+    candidate_pos = np.zeros((len(angles1)*len(angles2),3),dtype=float)   # initialize list for all possible positions of the next bead
 
     for N in range(1, number_of_beads):
-        possible_beads_pos = new_beads_pos(beads_pos[N-1,:],angles1,angles2)  # calculate all possible nodal points
-        possible_beads_pos = possible_beads_pos.reshape(-1,3)
-        energies = lj_energy.func(beads_pos[0:N,:],possible_beads_pos,sigma_squared,epsilon,N_candidates,N)
-        new_bead_index = determine_new_bead(energies,T)            # determine final new bead
-        beads_pos[N,:] = possible_beads_pos[new_bead_index,:]    # add new final new bead to the polymer
-    return beads_pos
+        candidate_pos = new_bead.positions(existing_pos[N-1,:],angles1,angles2).reshape(-1,3)    # calculate candidate nodal points
+        energies = lj_energy.func(existing_pos[0:N,:],candidate_pos,sigma_squared,epsilon,N_candidates,N)
+        new_bead_index = new_bead.roulette(energies,T)            # determine final new bead
+        existing_pos[N,:] = candidate_pos[new_bead_index,:]    # add new final new bead to the polymer
+    return existing_pos
 
-def plot(beads_pos):
+def plot(existing_pos):
     import matplotlib.pyplot as plt 			           # plotting tools
     import pylab
     from mpl_toolkits.mplot3d import Axes3D
