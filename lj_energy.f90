@@ -1,27 +1,23 @@
-! lj_energy.f90
-subroutine lj_energy(possible_pos,N_possible_pos,pos,N_beads,epsilon,sigma_squared, energies)
+subroutine func(pos,candidate_pos,N_candidates,N_existing,sigma_squared,epsilon,energies)
     implicit none
-
-    ! input variables
-    integer, intent(in) :: N_possible_pos, N_beads
-    real(8), intent(in) :: epsilon, sigma_squared
-    real(8), intent(in), dimension(N_possible_pos) :: possible_pos
-    real(8), intent(in), dimension(N_beads):: pos
     
-    ! local variables
-    real(8) :: abs_distance_squared, V
-    integer :: i, j
+    integer, intent(in) :: N_candidates, N_existing
+    real(8), intent(in) :: sigma_squared, epsilon
     
-    ! output variables
-    real(8), intent(out), dimension(N_possible_pos) :: energies
+    real(8), dimension(N_existing,2), intent(in) :: pos
+    real(8), dimension(N_candidates,2), intent(in) :: candidate_pos
+    real(8), dimension(N_candidates), intent(out) :: energies
+    real(8) :: V
     
-    ! calculate energies
-    do i=0,N_possible_pos
-        do j=0,N_beads
-            abs_distance_squared = ( ( (possible_pos(i) - pos(j))**2 ) )/sigma_squared
+    real(8) :: abs_distance_squared
+    integer :: i,j
+    
+    do i=1,N_candidates
+        do j=1,N_existing
+            abs_distance_squared = sum((candidate_pos(i,:) - pos(j,:))**2) / sigma_squared
             V = 4*epsilon*( (abs_distance_squared)**(-6) - (abs_distance_squared)**(-3))
             energies(i) = energies(i)+V
         end do
     end do
-     
-end subroutine lj_energy
+    
+end subroutine
