@@ -1,9 +1,7 @@
 # Import libraries and modules
-import numpy as np		                            # import numpy  
-# import sys                                          # progress messages
-from new_beads_positions import new_beads_pos       # calculate possible new bead positions
-from determine_new_bead import determine_new_bead   # function used to determine the final bead position by comparing the boltzmann factors
-import lj_energy
+import numpy as np	# import numpy  
+import new_bead     # determine new bead positions
+import lj_energy    # fortran lj_energy module
 
 def user_input():
     # sigma = input('Sigma value of L-J potential (default: 0.5): ') or 0.8
@@ -28,14 +26,10 @@ def start(number_of_beads,sigma,epsilon,T):
     candidate_pos = np.zeros((len(angles),2),dtype=float)       # initialize list for all possible positions of the next bead
     
     for N in range(1, number_of_beads):
-        candidate_pos = new_beads_pos(existing_pos[N-1,:],angles)  # calculate all possible nodal points
+        candidate_pos = new_bead.positions(existing_pos[N-1,:],angles)  # calculate all possible nodal points
         energies = lj_energy.func(existing_pos[0:N,:],candidate_pos,sigma_squared,epsilon,angle_dof,N) # calculate energies
-        new_bead_index = determine_new_bead(energies,T)         # determine final new bead
+        new_bead_index = new_bead.roulette(energies,T)         # determine final new bead
         existing_pos[N,:] = candidate_pos[new_bead_index,:]    # add new final new bead to the polymer
-
-        # plt.plot(existing_pos[0:N,0],existing_pos[0:N,1], 'b')
-        #plt.plot(existing_pos[0:N,0],existing_pos[0:N,1], '.r')
-        #plt.show()
     return existing_pos
 
 def plot(beads_pos):
