@@ -13,6 +13,7 @@ def user_input():
     # plot_data = input('Plot data? (y/n, default: y): ') or 'y'
     sigma = 0.8
     epsilon = 0.25
+    bending_energy = 10
     T = 1
     number_of_beads = 150
     plot_data = 'n'
@@ -26,10 +27,11 @@ def start(number_of_beads,sigma,epsilon,T):
     sigma_squared = sigma*sigma
     existing_pos = np.zeros((number_of_beads,2),dtype=float)    # initialize all bead positions
     candidate_pos = np.zeros((len(angles),2),dtype=float)       # initialize list for all possible positions of the next bead
+    angle_last_bead = 0
     
     for N in range(1, number_of_beads):
-        candidate_pos = new_beads_pos(existing_pos[N-1,:],angles)  # calculate all possible nodal points
-        energies = lj_energy.func(existing_pos[0:N,:],candidate_pos,sigma_squared,epsilon,angle_dof,N) # calculate energies
+        candidate_pos,angle_updated = new_beads_pos(existing_pos[N-1,:],angles)  # calculate all possible nodal points
+        energies = lj_energy.func(existing_pos[0:N,:],candidate_pos,sigma_squared,epsilon,angle_dof,N,angle_updated,angle_last_bead,bending_energy) # calculate energies
         new_bead_index = determine_new_bead(energies,T)         # determine final new bead
         existing_pos[N,:] = candidate_pos[new_bead_index,:]    # add new final new bead to the polymer
 
