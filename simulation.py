@@ -4,6 +4,7 @@ import numpy as np		                            # import numpy
 from new_beads_positions import new_beads_pos       # calculate possible new bead positions
 from determine_new_bead import determine_new_bead   # function used to determine the final bead position by comparing the boltzmann factors
 import lj_energy
+import matplotlib.pyplot as plt     # plotting tools
 
 def user_input():
     # sigma = input('Sigma value of L-J potential (default: 0.5): ') or 0.8
@@ -19,7 +20,6 @@ def user_input():
     return float(sigma), float(epsilon), float(T), int(number_of_beads), plot_data
 
 def start(number_of_beads,sigma,epsilon,T):
-    import matplotlib.pyplot as plt     # plotting tools
     ## Fixed parameters
     angle_dof = 360                               # Amount of different angles the polymer can move in
     angles = np.linspace(0,2*np.pi,angle_dof)   # Split 2*pi radians up into angle_dof amount of slices
