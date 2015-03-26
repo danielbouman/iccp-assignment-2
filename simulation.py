@@ -36,7 +36,7 @@ def start(number_of_beads,sigma,epsilon,T,bending_energy):
         total_weight_factor = weight_factor*total_weight_factor
         existing_pos[N,:] = candidate_pos[new_bead_index,:]    # add new final new bead to the polymer
         
-    end_to_end_distance = total_weight_factor*np.square(sum(np.square(existing_pos[0,:]-existing_pos[end,:])))
+    end_to_end_distance = total_weight_factor*np.square(sum(np.square(existing_pos[0,:]-existing_pos[-1,:])))
     return existing_pos, end_to_end_distance
 
 def plot(beads_pos):
