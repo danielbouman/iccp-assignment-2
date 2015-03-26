@@ -6,9 +6,9 @@ from datetime import datetime   # timer functions
 import simulation               # simulation module        
 
 # Simulation
-sigma, epsilon, T, Nbeads, plot_data = simulation.user_input()  # User input for simualation variables
+sigma, epsilon, T, Nbeads, plot_data, bending_energy = simulation.user_input()  # User input for simualation variables
 start_time=datetime.now() # =========== Start timer                                             # Startup message
-beads_pos = simulation.start(Nbeads,sigma,epsilon,T)            # Start simulation
+beads_pos = simulation.start(Nbeads,sigma,epsilon,T,bending_energy)            # Start simulation
 print(datetime.now() - start_time) # =========== End timer
 if plot_data == 'y':                                            # Plot when chosen
     simulation.plot(beads_pos)

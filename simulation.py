@@ -15,9 +15,9 @@ def user_input():
     T = 1
     number_of_beads = 150
     plot_data = 'n'
-    return float(sigma), float(epsilon), float(T), int(number_of_beads), plot_data
+    return float(sigma), float(epsilon), float(T), int(number_of_beads), plot_data, bending_energy
 
-def start(number_of_beads,sigma,epsilon,T):
+def start(number_of_beads,sigma,epsilon,T,bending_energy):
     ## Fixed parameters
     angle_dof = 6                               # Amount of different angles the polymer can move in
     angles = np.linspace(0,2*np.pi,angle_dof)   # Split 2*pi radians up into angle_dof amount of slices
@@ -28,10 +28,12 @@ def start(number_of_beads,sigma,epsilon,T):
     angle_last_bead = 0
     
     for N in range(1, number_of_beads):
-        candidate_pos = new_bead.positions(existing_pos[N-1,:],angles)  # calculate all possible nodal points
-        energies = lj_energy.func(existing_pos[0:N,:],candidate_pos,sigma_squared,epsilon,angle_dof,N) # calculate energies
+        candidate_pos,angles_updated = new_bead.positions(existing_pos[N-1,:],angles)  # calculate all possible nodal points
+        energies = lj_energy.func(existing_pos[0:N,:],candidate_pos,sigma_squared,epsilon,bending_energy,angle_last_bead,angles_updated,angle_dof,N) # calculate energies
         new_bead_index = new_bead.roulette(energies,T)         # determine final new bead
         existing_pos[N,:] = candidate_pos[new_bead_index,:]    # add new final new bead to the polymer
+        
+        # func(pos,candidate_pos,sigma_squared,epsilon,bend_energy,last_angle,possib_angles,[n_candidates,n_existing])
     return existing_pos
 
 def plot(beads_pos):
