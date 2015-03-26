@@ -5,7 +5,6 @@
 from datetime import datetime   # timer functions
 import simulation               # simulation module        
 
-
 # Simulation
 sigma, epsilon, T, Nbeads, plot_data = simulation.user_input()  # User input for simualation variables
 start_time=datetime.now() # =========== Start timer                                             # Startup message

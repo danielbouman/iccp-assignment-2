@@ -28,7 +28,7 @@ def start(number_of_beads,sigma,epsilon,T):
     cutoff_length = int(2*np.ceil(1+2.5*sigma))
     existing_pos = np.zeros((number_of_beads,3),dtype=float)  # initialize all bead positions
     candidate_pos = np.zeros((len(angles1)*len(angles2),3),dtype=float)   # initialize list for all possible positions of the next bead
-
+    
     for N in range(1, number_of_beads):
         candidate_pos = new_bead.positions(existing_pos[N-1,:],angles1,angles2).reshape(-1,3)    # calculate candidate nodal points
         energies = lj_energy.func(existing_pos[0:N,:],candidate_pos,sigma_squared,epsilon,N_candidates,N)
