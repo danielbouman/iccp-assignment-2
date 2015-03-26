@@ -15,7 +15,8 @@ def user_input():
     T = 1
     number_of_beads = 150
     plot_data = 'n'
-    return float(sigma), float(epsilon), float(T), int(number_of_beads), plot_data, bending_energy
+    amount_of_polymers = 100
+    return float(sigma), float(epsilon), float(T), int(number_of_beads), plot_data, bending_energy, int(amount_of_polymers)
 
 def start(number_of_beads,sigma,epsilon,T,bending_energy):
     ## Fixed parameters
@@ -26,15 +27,17 @@ def start(number_of_beads,sigma,epsilon,T,bending_energy):
     existing_pos = np.zeros((number_of_beads,2),dtype=float)    # initialize all bead positions
     candidate_pos = np.zeros((len(angles),2),dtype=float)       # initialize list for all possible positions of the next bead
     angle_last_bead = 0
-    
+    total_weight_factor = 1
+
     for N in range(1, number_of_beads):
         candidate_pos,angles_updated = new_bead.positions(existing_pos[N-1,:],angles)  # calculate all possible nodal points
         energies = lj_energy.func(existing_pos[0:N,:],candidate_pos,sigma_squared,epsilon,bending_energy,angle_last_bead,angles_updated,angle_dof,N) # calculate energies
-        new_bead_index = new_bead.roulette(energies,T)         # determine final new bead
+        new_bead_index,weight_factor = new_bead.roulette(energies,T)         # determine final new bead
+        total_weight_factor = weight_factor*total_weight_factor
         existing_pos[N,:] = candidate_pos[new_bead_index,:]    # add new final new bead to the polymer
         
-        # func(pos,candidate_pos,sigma_squared,epsilon,bend_energy,last_angle,possib_angles,[n_candidates,n_existing])
-    return existing_pos
+    end_to_end_distance = total_weight_factor*np.square(sum(np.square(existing_pos[0,:]-existing_pos[end,:])))
+    return existing_pos, end_to_end_distance
 
 def plot(beads_pos):
     import matplotlib.pyplot as plt     # plotting tools

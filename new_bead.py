@@ -29,4 +29,4 @@ def roulette(energies,T):
     for ii in range(0, len(probabilities)):
         if cumsum_probabilities[ii] > RNG:
             break
-    return ii;
+    return ii,probabilities[ii];
