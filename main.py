@@ -12,7 +12,7 @@ start_time=datetime.now() # =========== Start timer                             
 beads_pos = simulation.start(Nbeads,sigma,epsilon,T,bending_energy)            # Start simulation
 end_to_end_distance = np.zeros((amount_of_polymers,1),dtype=float)    # initialize all end_to_end distances
 start_time=datetime.now() # =========== Start timer                                             # Startup message
-for ii in range(0, Nbeads):
+for ii in range(0, amount_of_polymers):
     beads_pos,end_to_end_distance[ii] = simulation.start(Nbeads,sigma,epsilon,T,bending_energy)            # Start simulation
 
 print(datetime.now() - start_time) # =========== End timer
