@@ -16,7 +16,6 @@ def positions(previous_beads_pos, angles):
 """
 
 """
-
 ## Import libraries
 import numpy as np
 def roulette(energies,T):
