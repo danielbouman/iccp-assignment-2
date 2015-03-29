@@ -11,16 +11,16 @@ def user_input():
     # plot_data = input('Plot data? (y/n, default: y): ') or 'y'
     sigma = 0.8
     epsilon = 0.25
-    bending_energy = 10
-    T = 1
+    bending_energy = 1.3
+    T = 0.1
     number_of_beads = 150
-    plot_data = 'n'
-    amount_of_polymers = 100
+    plot_data = 'y'
+    amount_of_polymers = 1
     return float(sigma), float(epsilon), float(T), int(number_of_beads), plot_data, bending_energy, int(amount_of_polymers)
 
 def start(number_of_beads,sigma,epsilon,T,bending_energy):
     ## Fixed parameters
-    angle_dof = 6                               # Amount of different angles the polymer can move in
+    angle_dof = 360                               # Amount of different angles the polymer can move in
     angles = np.linspace(0,2*np.pi,angle_dof)   # Split 2*pi radians up into angle_dof amount of slices
     
     sigma_squared = sigma*sigma
@@ -35,12 +35,14 @@ def start(number_of_beads,sigma,epsilon,T,bending_energy):
         new_bead_index,weight_factor = new_bead.roulette(energies,T)         # determine final new bead
         total_weight_factor = weight_factor*total_weight_factor
         existing_pos[N,:] = candidate_pos[new_bead_index,:]    # add new final new bead to the polymer
+        angle_last_bead = angles_updated[new_bead_index]
         
-    end_to_end_distance = total_weight_factor*np.square(sum(np.square(existing_pos[0,:]-existing_pos[-1,:])))
-    return existing_pos, end_to_end_distance
+    end_to_end_distance = np.square(sum(np.square(existing_pos[0,:]-existing_pos[-1,:])))
+    return existing_pos, total_weight_factor, end_to_end_distance;
 
-def plot(beads_pos):
+def plot(beads_pos,end_to_end_distance):
     import matplotlib.pyplot as plt     # plotting tools
     plt.plot(beads_pos[:,0],beads_pos[:,1], 'b')
     plt.plot(beads_pos[:,0],beads_pos[:,1], '.r')
+    #plt.plot(end_to_end_distance)
     plt.show()

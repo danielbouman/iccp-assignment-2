@@ -19,7 +19,7 @@ subroutine func(pos,candidate_pos,N_candidates,N_existing,sigma_squared,epsilon,
             V = 4*epsilon*( (abs_distance_squared)**(-6) - (abs_distance_squared)**(-3))
             energies(i) = energies(i)+V
         end do
-        energies(i) = energies(i)+bend_energy*cos(0.5*(possib_angles(i)-last_angle))
+        energies(i) = energies(i)+bend_energy*sin(0.5*(possib_angles(i)-last_angle),4.*atan(1.))**2
     end do
     
 end subroutine
