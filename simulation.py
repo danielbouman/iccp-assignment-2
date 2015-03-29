@@ -11,16 +11,16 @@ def user_input():
     # plot_data = input('Plot data? (y/n, default: y): ') or 'y'
     sigma = 0.8
     epsilon = 0.25
-    bending_energy = 1.3
+    bending_energy = 0.0
     T = 0.1
-    number_of_beads = 150
+    number_of_beads = 80
     plot_data = 'y'
-    amount_of_polymers = 1
-    return float(sigma), float(epsilon), float(T), int(number_of_beads), plot_data, bending_energy, int(amount_of_polymers)
+    amount_of_polymers = 1000
+    return float(sigma), float(epsilon), float(T), int(number_of_beads), plot_data, float(bending_energy), int(amount_of_polymers)
 
 def start(number_of_beads,sigma,epsilon,T,bending_energy):
     ## Fixed parameters
-    angle_dof = 360                               # Amount of different angles the polymer can move in
+    angle_dof = 72                               # Amount of different angles the polymer can move in
     angles = np.linspace(0,2*np.pi,angle_dof)   # Split 2*pi radians up into angle_dof amount of slices
     
     sigma_squared = sigma*sigma
@@ -37,8 +37,16 @@ def start(number_of_beads,sigma,epsilon,T,bending_energy):
         existing_pos[N,:] = candidate_pos[new_bead_index,:]    # add new final new bead to the polymer
         angle_last_bead = angles_updated[new_bead_index]
         
-    end_to_end_distance = np.square(sum(np.square(existing_pos[0,:]-existing_pos[-1,:])))
-    return existing_pos, total_weight_factor, end_to_end_distance;
+    end_to_end_distance_squared = sum(np.square(existing_pos[0,:]-existing_pos[-1,:]))
+    centre_of_mass = sum(existing_pos)/number_of_beads
+    radius_of_gyration_squared = sum(sum(np.square(existing_pos[:,:]-centre_of_mass)))
+    return existing_pos, total_weight_factor, end_to_end_distance_squared,radius_of_gyration_squared;
+
+def calculate_expectation_value(weight_factors,quantities):
+    #weight_factors[np.isnan(weight_factors)] = 0        # replace the weights that are too low for calculations by zero
+    expectation_value_quantity = np.nansum(np.multiply(weight_factors,quantities))/np.nansum(weight_factors)
+    return expectation_value_quantity;
+
 
 def plot(beads_pos,end_to_end_distance):
     import matplotlib.pyplot as plt     # plotting tools
