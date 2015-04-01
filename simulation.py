@@ -13,14 +13,14 @@ def user_input():
     epsilon = 0.25
     bending_energy = 0.0
     T = 0.1
-    number_of_beads = 80
+    number_of_beads = 150
     plot_data = 'y'
-    amount_of_polymers = 1000
+    amount_of_polymers = 10
     return float(sigma), float(epsilon), float(T), int(number_of_beads), plot_data, float(bending_energy), int(amount_of_polymers)
 
 def start(number_of_beads,sigma,epsilon,T,bending_energy):
     ## Fixed parameters
-    angle_dof = 72                               # Amount of different angles the polymer can move in
+    angle_dof = 6                               # Amount of different angles the polymer can move in
     angles = np.linspace(0,2*np.pi,angle_dof)   # Split 2*pi radians up into angle_dof amount of slices
     
     sigma_squared = sigma*sigma
