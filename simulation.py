@@ -15,7 +15,7 @@ def user_input():
     T = 0.1
     number_of_beads = 150
     plot_data = 'y'
-    amount_of_polymers = 10
+    amount_of_polymers = 1000
     return float(sigma), float(epsilon), float(T), int(number_of_beads), plot_data, float(bending_energy), int(amount_of_polymers)
 
 def start(number_of_beads,sigma,epsilon,T,bending_energy):

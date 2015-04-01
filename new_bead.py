@@ -21,7 +21,7 @@ def positions(previous_beads_pos, angles):
 import numpy as np
 def roulette(energies,T):
     probabilities = np.exp(np.divide(energies,-T))   # unnormalized probabilities
-    weight_factor = sum(probabilities)
+    #weight_factor = sum(probabilities)
     probabilities = np.divide(probabilities,sum(probabilities)) # normalize probabilities by dividing by their sum
     cumsum_probabilities = np.cumsum(probabilities)
     RNG = np.random.random() # rng is a random number chosen from a uniform distribution between 0 and 1. It is used to select one of the possible bead positions with corresponding probability
@@ -29,4 +29,4 @@ def roulette(energies,T):
     for ii in range(0, len(probabilities)):
         if cumsum_probabilities[ii] > RNG:
             break
-    return ii,weight_factor;
+    return ii,probabilities[ii];
