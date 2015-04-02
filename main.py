@@ -10,7 +10,7 @@ import os
 
 # Simulation
 sigma, epsilon, T, minBeads, maxBeads, plot_data, bending_energy, amount_of_polymers = simulation.user_input()  # User input for simualation variables
-start_time=datetime.now() # =========== Start timer                                             # Startup message
+start_time=datetime.now() # =========== Start timer t                                            # Startup message
 weight_factors = np.zeros((amount_of_polymers),dtype=float)    # initialize all end_to_end distances
 end_to_end_distance_squared = np.zeros((amount_of_polymers),dtype=float)    # initialize all end_to_end distances, squared
 radius_of_gyration_squared = np.zeros((amount_of_polymers),dtype=float)    # initialize all end_to_end distances, squared
