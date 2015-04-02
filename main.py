@@ -34,13 +34,19 @@ for iii in range(minBeads, maxBeads):
     print(str(iii) + " beads, done in: " + str(datetime.now() - start_time))
     
     # Collect properties
+    end_to_end_distance = np.sqrt(end_to_end_distance_squared)
     radius_of_gyration = np.sqrt(radius_of_gyration_squared)
+    exp_end_to_end_distance = simulation.calculate_expectation_value(weight_factors,end_to_end_distance)
     exp_end_to_end_distance_squared = simulation.calculate_expectation_value(weight_factors,end_to_end_distance_squared)
     exp_radius_of_gyration = simulation.calculate_expectation_value(weight_factors,radius_of_gyration)
     
-    # Save data to file
-    save.save(exp_end_to_end_distance_squared,"R_squared",header="",write_mode=write_mode)
-    save.save(exp_radius_of_gyration,"exp_radius_of_gyration",header="",write_mode=write_mode)
+    if multi:
+        # Save data to file
+        save.save(exp_end_to_end_distance_squared,"R_squared",header="",write_mode=write_mode)
+        save.save(exp_radius_of_gyration,"exp_radius_of_gyration",header="",write_mode=write_mode)
+    else:
+        print("End to end distance: " + str(exp_end_to_end_distance))
+        print("Radius of gyration: " + str(exp_radius_of_gyration))
 
 if plot_data == 'y':                                            # Plot when chosen
     simulation.plot(beads_pos,end_to_end_distance)
