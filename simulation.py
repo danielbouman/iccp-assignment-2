@@ -9,14 +9,20 @@ def user_input():
     # T = input('Temperature, expressed in epsilon (default: 1): ') or 1.0
     # number_of_beads = input('Amount of beads per polymer: ') or 150
     # plot_data = input('Plot data? (y/n, default: y): ') or 'y'
+    multi = input('Simulate more than one chain length? [Y/n]  ') or 'n'
+    if multi.lower() == 'y':
+        minBeads = input('Mininum number of beads: ') or 3
+        maxBeads = input('Maximum number of beads: ') or 4
+    else:
+        minBeads = input('Number of beads: ') or 150
+        maxBeads = minBeads
     sigma = 0.8
     epsilon = 0.25
     bending_energy = 0.0
     T = 0.1
-    number_of_beads = 150
-    plot_data = 'y'
-    amount_of_polymers = 1000
-    return float(sigma), float(epsilon), float(T), int(number_of_beads), plot_data, float(bending_energy), int(amount_of_polymers)
+    plot_data = 'n'
+    amount_of_polymers = 100
+    return float(sigma), float(epsilon), float(T), int(minBeads), int(maxBeads)+1, plot_data, float(bending_energy), int(amount_of_polymers)
 
 def start(number_of_beads,sigma,epsilon,T,bending_energy):
     ## Fixed parameters
