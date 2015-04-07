@@ -23,6 +23,5 @@ else:
 for iii in range(minBeads, maxBeads):
     existingPos = simulation.simulation(iii,multi,write_mode)
 
-
 if plot_data == 'y':                                            # Plot when chosen
     simulation.plot(existingPos)
