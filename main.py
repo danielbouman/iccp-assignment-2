@@ -6,6 +6,9 @@ import simulation               # simulation module
 import numpy as np
 import save_data as save
 import os
+import sys
+sys.setrecursionlimit(10000) # 10000 is an example, try with different values
+
 np.seterr(divide='ignore', invalid='ignore')
 
 # Simulation

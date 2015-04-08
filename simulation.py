@@ -5,6 +5,17 @@ import lj_energy    # fortran lj_energy module
 from datetime import datetime   # timer functions
 
 def user_input():
+    # Call global variables
+    global nBeads       
+    global nPolymers
+    global sigma
+    global epsilon
+    global bendingEnergy
+    global T
+    global plotData
+    global upLimInit
+    global lowLimInit
+    
     # sigma = input('Sigma value of L-J potential (default: 0.5): ') or 0.8
     # epsilon = input('Epsilon value of L-J potential (default: 0.5): ') or 0.25
     # T = input('Temperature, expressed in epsilon (default: 1): ') or 1.0
@@ -20,16 +31,6 @@ def user_input():
         minBeads = 150
         maxBeads = minBeads
 
-    global nBeads       
-    global nPolymers
-    global sigma
-    global epsilon
-    global bendingEnergy
-    global T
-    global plotData
-    global upLimInit
-    global lowLimInit
-
     upLimInit = 1.2
     lowLimInit = 1.0
     sigma = 0.8
@@ -37,8 +38,8 @@ def user_input():
     bendingEnergy = 0.0
     T = 1
     plotData = 'n'
-    nPolymers = 5
-    nBeads = 35
+    nPolymers = 300
+    nBeads = 150
     return float(sigma), float(epsilon), float(T), int(minBeads), int(maxBeads)+1, plotData, float(bendingEnergy), int(nPolymers)
 
 def addBead(L,N,existingPos,candidatePos,angles,angleLastBead,total_weight_factors,upLim,lowLim):
@@ -47,46 +48,49 @@ def addBead(L,N,existingPos,candidatePos,angles,angleLastBead,total_weight_facto
     new_bead_index,weight_factor = new_bead.roulette(energies,T)         # determine final new bead
     total_weight_factors = weight_factor*total_weight_factors
     print("Polymer "+str(N)+", bead "+str(L)+", weight: "+ str(total_weight_factors)+" lowLim: "+str(lowLim)+", upLim: "+str(upLim))
-    existingPos[L,:] = candidatePos[new_bead_index,:]    # add new final new bead to the polymer
+    existingPos[L-1,:] = candidatePos[new_bead_index,:]    # add new final new bead to the polymer
     angleLastBead = angles_updated[new_bead_index]
 
-    
     upLim = 1.1*upLim
-    lowLim = 0.9*lowLim
+    lowLim = 0.11*lowLim
 
-    if L < nBeads-1:
+    if L < nBeads:
+        global nPolymers
         if total_weight_factors>upLim:
-            print('upLim')
-            # Clone current polymer
-            addBead(L+1,N+1,existingPos,candidatePos,angles,angleLastBead,0.5*total_weight_factors,upLim,lowLim)
-            # Multiply weight by 0.5 and continue growing current polymer
+            # Enrichment
+            nPolymers = nPolymers + 1
+            print('upLim reached, clone current polymer. nPolymers: '+str(nPolymers))
+            # Clone current polymer and grow
+            addBead(L+1,nPolymers,existingPos,candidatePos,angles,angleLastBead,0.5*total_weight_factors,upLim,lowLim)
+            print('Done with cloned polymer, continue growing original')
+            # When done with cloned polymer, multiply weight original polymer by 0.5 and continue growing
             return addBead(L+1,N,existingPos,candidatePos,angles,angleLastBead,0.5*total_weight_factors,upLim,lowLim)
             
-            # nPolymers = nPolymers + 1
-            
-        elif total_weight_factors<lowLim:
-            print('lowLim')
+        if total_weight_factors<lowLim:
+            # Pruning
             RNG = np.random.random()
             if RNG<0.5:
-                print('Polymer weight doubled')
+                print('lowLim reached, polymer weight doubled')
+                # Double current polymer weight and continue growing
                 return addBead(L+1,N,existingPos,candidatePos,angles,angleLastBead,2*total_weight_factors,upLim,lowLim)
             else:
-                print('Polymer removed')
-                return addBead(1,N,existingPos,candidatePos,angles,angleLastBead,1,upLimInit,lowLimInit)
+                # Remove current bead
+                nPolymers = nPolymers - 1
+                print('lowLim reached, polymer removed. nPolymers: '+str(nPolymers))
+                return existingPos,2,N
         else:
             return addBead(L+1,N,existingPos,candidatePos,angles,angleLastBead,total_weight_factors,upLim,lowLim)
-
+            
     N = N + 1
     return existingPos,total_weight_factors,N
 
 
 def simulation(nBeads,multi,write_mode):    
     start_time = datetime.now()
-    weight_factors = np.ones((nPolymers),dtype=float)    # initialize all end_to_end distances
-    end_to_end_distance_squared = np.zeros((nPolymers),dtype=float)    # initialize all end_to_end distances, squared
-    radius_of_gyration_squared = np.zeros((nPolymers),dtype=float)    # initialize all end_to_end distances, squared
+    weight_factors = np.ones((nPolymers*2),dtype=float)                   # initialize all end_to_end distances
+    end_to_end_distance_squared = np.zeros((nPolymers*2),dtype=float)     # initialize all end_to_end distances, squared
+    radius_of_gyration_squared = np.zeros((nPolymers*2),dtype=float)      # initialize all end_to_end distances, squared
     
-
     # Fixed parameters
     global sigmaSquared
     global angleDOF
@@ -95,8 +99,8 @@ def simulation(nBeads,multi,write_mode):
     angles = np.linspace(0,2*np.pi,angleDOF)   # Split 2*pi radians up into angleDOF amount of slices
 
     sigmaSquared = sigma*sigma
-    existingPos = np.zeros((nBeads,2),dtype=float)    # initialize all bead positions
-    candidatePos = np.zeros((len(angles),2),dtype=float)       # initialize list for all possible positions of the next bead
+    existingPos = np.zeros((nBeads,2),dtype=float)          # initialize all bead positions
+    candidatePos = np.zeros((len(angles),2),dtype=float)    # initialize list for all possible positions of the next bead
     angleLastBead = 0
     total_weight_factors = 1
 
@@ -105,15 +109,14 @@ def simulation(nBeads,multi,write_mode):
     
     # Simulate polymers
     while N < nPolymers:
-        
-        print("nPolymers: "+str(nPolymers))
         # Create polymer
-        total_weight_factors = 1
-        upLim = upLimInit
-        lowLim = lowLimInit
-        L = 1
+        total_weight_factors = 1    # Starting polymer weight factor
+        upLim = upLimInit           # When reached enrich
+        lowLim = lowLimInit         # When reached prune
+        L = 1                       # Starting bead
+        # Grow beads
         existingPos,weight_factor_single,N = addBead(L,N,existingPos,candidatePos,angles,angleLastBead,total_weight_factors,upLim,lowLim)
-        
+        # Collect data
         end_to_end_distance_squared[N-1] = sum(np.square(existingPos[0,:]-existingPos[-1,:]))
         centre_of_mass = sum(existingPos)/nBeads
         radius_of_gyration_squared[N-1] = sum(sum(np.square(existingPos[:,:]-centre_of_mass)))
@@ -121,14 +124,12 @@ def simulation(nBeads,multi,write_mode):
 
     print(str(nBeads) + " beads, done in: " + str(datetime.now() - start_time))
     
-    # Collect properties
+    # Collect data
     end_to_end_distance = np.sqrt(end_to_end_distance_squared)
     radius_of_gyration = np.sqrt(radius_of_gyration_squared)
     exp_end_to_end_distance = calculate_expectation_value(weight_factors,end_to_end_distance)
     exp_end_to_end_distance_squared = calculate_expectation_value(weight_factors,end_to_end_distance_squared)
     exp_radius_of_gyration = calculate_expectation_value(weight_factors,radius_of_gyration)
-    # print(weight_factors)
-    # print(exp_end_to_end_distance)
     if multi:
         # Save data to file
         save.save(exp_end_to_end_distance_squared,"R_squared",header="",write_mode=write_mode)
