@@ -48,7 +48,7 @@ def partitionFunction(L,oldZ):
     currentZ = oldZ(L)
     return currentZ
 
-def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,polymerWeight,upLim,lowLim):
+def addBead(L,localN,existingPos,candidatePos,baseAngles,angleLastBead,currentPolymerWeight,upLim,lowLim):
     # Variables
     global diagFile
     
@@ -61,13 +61,13 @@ def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,polymerWeight,
     # Add chosen bead position to existing positions
     existingPos[L-1,:] = candidatePos[chosenBeadIndex,:]
     # Update current polymer weight
-    polymerWeight = beadWeight*polymerWeight
+    currentPolymerWeight = beadWeight*currentPolymerWeight
     # Save chosen angle of current bead for bending energy with next bead
     angleLastBead = candidateAngles[chosenBeadIndex]
     # Update upper polymerWeight limit for enrichment and lower polymerWeight limit for pruning
     # partitionFunction = 
     # Write to diagnostics file
-    diagFile.write("Polymer "+str(N)+", bead "+str(L)+", weight: "+ str(polymerWeight)+" lowLim: "+str(lowLim)+", upLim: "+str(upLim)+"\n")
+    diagFile.write("Polymer "+str(N)+", bead "+str(L)+", weight: "+ str(currentPolymerWeight)+" lowLim: "+str(lowLim)+", upLim: "+str(upLim)+"\n")
     upLim = 1.1*upLim
     lowLim = 0.7*lowLim
 
@@ -76,32 +76,39 @@ def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,polymerWeight,
         global nPolymers
         global nPolymersEnrich
         # Enrichment
-        if polymerWeight>upLim:
+        if currentPolymerWeight>upLim:
             # Increase population with one polymer
             nPolymersEnrich = nPolymersEnrich + 1                                                                           
             diagFile.write('upLim reached, clone current polymer. nPolymers: '+str(nPolymers)+'\n')                 # Write to diagnostics file
-            return addBead(L+1,nPolymersEnrich,existingPos,candidatePos,angles,angleLastBead,0.5*polymerWeight,upLim,lowLim) # Clone current polymer and grow clone 
+            addBead(L+1,nPolymersEnrich,existingPos,candidatePos,angles,angleLastBead,0.5*currentPolymerWeight,upLim,lowLim) # Clone current polymer and grow clone 
             diagFile.write('Done with cloned polymer, continue growing original'+'\n')                              # Write to diagnostics file
-            return addBead(L+1,N,existingPos,candidatePos,angles,angleLastBead,0.5*polymerWeight,upLim,lowLim)      # When finished growing cloned polymer, multiply weight original polymer by 0.5 and continue growing
+            return addBead(L+1,localN,existingPos,candidatePos,angles,angleLastBead,0.5*currentPolymerWeight,upLim,lowLim)      # When finished growing cloned polymer, multiply weight original polymer by 0.5 and continue growing
             
         # Pruning
-        if polymerWeight<lowLim:
+        if currentPolymerWeight<lowLim:
             RNG = np.random.random()
             if RNG<0.5:
                 # Double current polymer weight and continue growing
                 diagFile.write('lowLim reached, polymer weight doubled\n')
-                return addBead(L+1,N,existingPos,candidatePos,angles,angleLastBead,2*polymerWeight,upLim,lowLim)
+                return addBead(L+1,localN,existingPos,candidatePos,angles,angleLastBead,2*currentPolymerWeight,upLim,lowLim)
             else:
                 # Remove current bead
                 nPolymers = nPolymers - 1
                 diagFile.write('lowLim reached, polymer removed. nPolymers: '+str(nPolymers)+'\n')
-                return existingPos,2,N
+                return existingPos,2,localN
         else:
             # Continue with next bead
-            return addBead(L+1,N,existingPos,candidatePos,angles,angleLastBead,polymerWeight,upLim,lowLim)
-    # Select the next polymer
-    N = N + 1
-    return existingPos,polymerWeight,N
+            return addBead(L+1,localN,existingPos,candidatePos,angles,angleLastBead,currentPolymerWeight,upLim,lowLim)
+    
+    
+    global beadPos
+    global polymerWeight
+    global N
+    N = localN + 1  # Select the next polymer
+    polymerWeight[N] = currentPolymerWeight
+    beadPos = existingPos
+    
+    # return existingPos,polymerWeight,N
 
 
 def simulation(nBeads,multi,write_mode):    
@@ -115,11 +122,14 @@ def simulation(nBeads,multi,write_mode):
     global nPolymersEnrich
     global startPolymers
     global nPolymers
+    global beadPos
+    global polymerWeight
+    global N
     nPolymersEnrich = startPolymers
     angleDOF = 6                               # Amount of different angles the polymer can move in
     angles = np.linspace(0,2*np.pi,angleDOF)   # Split 2*pi radians up into angleDOF amount of slices
     sigmaSquared = sigma*sigma
-    existingPos = np.zeros((nBeads,2),dtype=float)          # initialize all bead positions
+    beadPos = np.zeros((nBeads,2),dtype=float)          # initialize all bead positions
     candidatePos = np.zeros((len(angles),2),dtype=float)    # initialize list for all possible positions of the next bead
     angleLastBead = 0
     total_weight_factors = 1
@@ -127,9 +137,7 @@ def simulation(nBeads,multi,write_mode):
     polymerWeight = np.ones((startPolymers*2),dtype=float)                   # initialize all end_to_end distances
     end_to_end_distance_squared = np.zeros((startPolymers*2),dtype=float)     # initialize all end_to_end distances, squared
     radius_of_gyration_squared = np.zeros((startPolymers*2),dtype=float)      # initialize all end_to_end distances, squared
-    
     N = 0   # First polymer
-    L = 1   # First bead
     
     # Open file for diagnostic data
     diagFile = open("diag.txt","w")
@@ -144,12 +152,13 @@ def simulation(nBeads,multi,write_mode):
         L = 1                   # Starting bead
         
         # Grow beads
-        existingPos,polymerWeight[N],N = addBead(L,N,existingPos,candidatePos,angles,angleLastBead,polymerWeightInit,upLim,lowLim)
+        # beadPos,polymerWeight[N],N = addBead(L,N,beadPos,candidatePos,angles,angleLastBead,polymerWeightInit,upLim,lowLim)
+        addBead(L,N,beadPos,candidatePos,angles,angleLastBead,polymerWeightInit,upLim,lowLim)
         
         # Collect data
-        end_to_end_distance_squared[N-1] = sum(np.square(existingPos[0,:]-existingPos[-1,:]))
-        centre_of_mass = sum(existingPos)/nBeads
-        radius_of_gyration_squared[N-1] = sum(sum(np.square(existingPos[:,:]-centre_of_mass)))
+        end_to_end_distance_squared[N-1] = sum(np.square(beadPos[0,:]-beadPos[-1,:]))
+        centre_of_mass = sum(beadPos)/nBeads
+        radius_of_gyration_squared[N-1] = sum(sum(np.square(beadPos[:,:]-centre_of_mass)))
 
     # Write diagnostics
     diagFile.write(str(nBeads) + " beads, done in: " + str(datetime.now() - start_time))
@@ -177,7 +186,7 @@ def simulation(nBeads,multi,write_mode):
     else:
         print("End to end distance: " + str(exp_end_to_end_distance))
         print("Radius of gyration: " + str(exp_radius_of_gyration))
-    return existingPos;
+    return beadPos;
 
 
 def calculate_expectation_value(weight_factors,quantities):
