@@ -43,13 +43,17 @@ def user_input():
     return float(sigma), float(epsilon), float(T), int(minBeads), int(maxBeads)+1, plotData, float(bendingEnergy), int(nPolymers)
 
 def addBead(L,N,existingPos,candidatePos,angles,angleLastBead,total_weight_factors,upLim,lowLim):
-    candidatePos,angles_updated = new_bead.positions(existingPos[L-1,:],angles)  # calculate all possible nodal points
-    energies = lj_energy.func(existingPos[0:L,:],candidatePos,sigmaSquared,epsilon,bendingEnergy,angleLastBead,angles_updated,angleDOF,L) # calculate energies
+    # Determine candidate positions for new bead
+    candidatePos,angles_updated = new_bead.positions(existingPos[L-1,:],angles)  
+    # Calculate total energy for each candidate position
+    energies = lj_energy.func(existingPos[0:L,:],candidatePos,sigmaSquared,epsilon,bendingEnergy,angleLastBead,angles_updated,angleDOF,L)
     new_bead_index,weight_factor = new_bead.roulette(energies,T)         # determine final new bead
     total_weight_factors = weight_factor*total_weight_factors
-    print("Polymer "+str(N)+", bead "+str(L)+", weight: "+ str(total_weight_factors)+" lowLim: "+str(lowLim)+", upLim: "+str(upLim))
     existingPos[L-1,:] = candidatePos[new_bead_index,:]    # add new final new bead to the polymer
     angleLastBead = angles_updated[new_bead_index]
+    
+    
+    print("Polymer "+str(N)+", bead "+str(L)+", weight: "+ str(total_weight_factors)+" lowLim: "+str(lowLim)+", upLim: "+str(upLim))
 
     upLim = 1.1*upLim
     lowLim = 0.11*lowLim
