@@ -12,7 +12,7 @@ sys.setrecursionlimit(10000) # 10000 is an example, try with different values
 np.seterr(divide='ignore', invalid='ignore')
 
 # Simulation
-sigma, epsilon, T, minBeads, maxBeads, plot_data, bending_energy, amount_of_polymers = simulation.user_input()  # User input for simualation variables
+minBeads, maxBeads, plot_data = simulation.user_input()  # User input for simualation variables
 
 # Check if multiple polymer lengths are simulated
 if (minBeads+1) == maxBeads:
