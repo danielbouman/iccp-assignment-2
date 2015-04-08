@@ -31,14 +31,14 @@ def user_input():
         minBeads = 150
         maxBeads = minBeads
 
-    upLimInit = 1.2
-    lowLimInit = 1.0
+    upLimInit = 0.5
+    lowLimInit = 0.3
     sigma = 0.8
     epsilon = 0.25
     bendingEnergy = 0.0
     T = 1
     plotData = 'n'
-    nPolymers = 300
+    nPolymers = 1000
     nBeads = 150
     return float(sigma), float(epsilon), float(T), int(minBeads), int(maxBeads)+1, plotData, float(bendingEnergy), int(nPolymers)
 
@@ -55,8 +55,8 @@ def addBead(L,N,existingPos,candidatePos,angles,angleLastBead,total_weight_facto
     
     print("Polymer "+str(N)+", bead "+str(L)+", weight: "+ str(total_weight_factors)+" lowLim: "+str(lowLim)+", upLim: "+str(upLim))
 
-    upLim = 1.1*upLim
-    lowLim = 0.11*lowLim
+    upLim = 2.1*upLim
+    lowLim = 1.03*lowLim
 
     if L < nBeads:
         global nPolymers
@@ -91,7 +91,7 @@ def addBead(L,N,existingPos,candidatePos,angles,angleLastBead,total_weight_facto
 
 def simulation(nBeads,multi,write_mode):    
     start_time = datetime.now()
-    weight_factors = np.ones((nPolymers*2),dtype=float)                   # initialize all end_to_end distances
+    polymerWeight = np.ones((nPolymers*2),dtype=float)                   # initialize all end_to_end distances
     end_to_end_distance_squared = np.zeros((nPolymers*2),dtype=float)     # initialize all end_to_end distances, squared
     radius_of_gyration_squared = np.zeros((nPolymers*2),dtype=float)      # initialize all end_to_end distances, squared
     
@@ -119,7 +119,7 @@ def simulation(nBeads,multi,write_mode):
         lowLim = lowLimInit         # When reached prune
         L = 1                       # Starting bead
         # Grow beads
-        existingPos,weight_factor_single,N = addBead(L,N,existingPos,candidatePos,angles,angleLastBead,total_weight_factors,upLim,lowLim)
+        existingPos,polymerWeight[N],N = addBead(L,N,existingPos,candidatePos,angles,angleLastBead,total_weight_factors,upLim,lowLim)
         # Collect data
         end_to_end_distance_squared[N-1] = sum(np.square(existingPos[0,:]-existingPos[-1,:]))
         centre_of_mass = sum(existingPos)/nBeads
@@ -129,11 +129,18 @@ def simulation(nBeads,multi,write_mode):
     print(str(nBeads) + " beads, done in: " + str(datetime.now() - start_time))
     
     # Collect data
+    #print(polymerWeight)
+    #polymerWeight = polymerWeight[0:nPolymers]
+    #print(polymerWeight)
+    polymerWeight = [0 if x==1 else x for x in polymerWeight]
+
+    print(polymerWeight)
+
     end_to_end_distance = np.sqrt(end_to_end_distance_squared)
     radius_of_gyration = np.sqrt(radius_of_gyration_squared)
-    exp_end_to_end_distance = calculate_expectation_value(weight_factors,end_to_end_distance)
-    exp_end_to_end_distance_squared = calculate_expectation_value(weight_factors,end_to_end_distance_squared)
-    exp_radius_of_gyration = calculate_expectation_value(weight_factors,radius_of_gyration)
+    exp_end_to_end_distance = calculate_expectation_value(polymerWeight,end_to_end_distance)
+    exp_end_to_end_distance_squared = calculate_expectation_value(polymerWeight,end_to_end_distance_squared)
+    exp_radius_of_gyration = calculate_expectation_value(polymerWeight,radius_of_gyration)
     if multi:
         # Save data to file
         save.save(exp_end_to_end_distance_squared,"R_squared",header="",write_mode=write_mode)
