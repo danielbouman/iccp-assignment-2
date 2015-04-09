@@ -34,13 +34,9 @@ def user_input():
     bendingEnergy = 0.0
     T = 0.5               # Temperature
     plotData = 'n'      # Plot data boolean
-    startPolymers = 300  # Ensemble size
-    nBeads = 30         # Numer of beads per polymer
+    startPolymers = 1  # Ensemble size
+    nBeads = 150         # Numer of beads per polymer
     return int(minBeads), int(maxBeads)+1, plotData
-    
-# Partition function
-# def partitionFunction(innerZ,completedPolymers,currentPolymerWeight):
-#     return (innerZ*completedPolymers+currentPolymerWeight)/(completedPolymers+1)
     
 # Add bead function
 def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,currentPolymerWeight):
@@ -56,19 +52,12 @@ def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,currentPolymer
     existingPos[L,:] = candidatePos[chosenBeadIndex,:] # Add chosen bead position to existing positions
     currentPolymerWeight = beadWeight*currentPolymerWeight # Update current polymer weight
     angleLastBead = candidateAngles[chosenBeadIndex] # Save chosen angle of current bead for bending energy with next bead 
-    
-    
-    diagFile.write('OldZ1['+str(L)+']: '+str(oldZ[L])+'\n')
-    diagFile.write('Z1['+str(L)+']: '+str(Z[L])+'\n')
-    tempZ = oldZ[L]
-    diagFile.write('OldZ1a['+str(L)+']: '+str(oldZ[L])+'\n')
-    Z[L] = (tempZ*completedPolymers+currentPolymerWeight)/(completedPolymers+1)
-    diagFile.write('OldZ2['+str(L)+']: '+str(oldZ[L])+'\n')
+    # Partition function
+    Z[L] = (oldZ[L]*completedPolymers+currentPolymerWeight)/(completedPolymers+1)
     
     if N != 0:
-        diagFile.write('OldZ['+str(L)+']: '+str(oldZ[L])+'\n')
-        upLim = 2.0*oldZ[L]
-        lowLim = 1.2*oldZ[L]
+        upLim = 9.5*oldZ[L]/oldZ[2]
+        lowLim = 0.95*oldZ[L]/oldZ[2]
     else:
         upLim = float('inf')
         lowLim = 0
@@ -87,19 +76,13 @@ def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,currentPolymer
             # Declare global variables
             global beadPos
             global polymerWeights
-            # global nPolymersEnrich
             diagFile.write('upLim reached, clone current polymer. nPolymers: '+str(nPolymers)+'\n') # Write diagnostics to file
-            diagFile.write(str(polymerWeights))
+            # diagFile.write(str(polymerWeights))
             tempN = np.nonzero(polymerWeights == 1)[0][0] # Look for empty locations for a new polymer
             polymerWeights[tempN] = 0
             nPolymers = nPolymers + 1
             beadPos, polymerWeights[tempN], _ = addBead(L+1,tempN,existingPos,candidatePos,angles,angleLastBead,0.5*currentPolymerWeight) # Clone current polymer and grow clone 
             diagFile.write('Done with cloned polymer, continue growing original polymer ('+str(N)+')\n') # Write diagnostics to file
-            # if polymerPruned:
-            #     diagFile.write('Cloned polymer was removed'+'\n')
-            #     polymerPruned = False
-            # else:
-            #     diagFile.write('Cloned polymer '+str(Ntemp)+' was fully grown'+'\n')
             return addBead(L+1,N,existingPos,candidatePos,angles,angleLastBead,0.5*currentPolymerWeight) # When finished growing cloned polymer, multiply weight original polymer by 0.5 and continue growing
             
         if currentPolymerWeight<lowLim: # Prune
@@ -111,7 +94,6 @@ def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,currentPolymer
                 nPolymers = nPolymers - 1 # Decrease population
                 polymerPruned = True
                 diagFile.write('lowLim reached, polymer removed. nPolymers: '+str(nPolymers)+'\n') # Write diagnostics to file
-                diagFile.write('OldZ['+str(L)+']: '+str(oldZ[L])+'\n')
                 return existingPos, 1, N
         else:
             # Continue with next bead
