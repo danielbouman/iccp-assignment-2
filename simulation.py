@@ -30,11 +30,11 @@ def user_input():
         minBeads = 30
         maxBeads = minBeads
     sigma = 0.8         # Sigma for the Lennard Jones potential
-    epsilon = 0.25      # epsilon for the Lennard Jones potential
+    epsilon = 0.25      # epsilon for the Lennard Jones potential 
     bendingEnergy = 0.0
-    T = 1               # Temperature
-    plotData = 'n'      # Plot data boolean
-    startPolymers = 30  # Ensemble size
+    T = 0.5               # Temperature
+    plotData = 'y'      # Plot data boolean
+    startPolymers = 1  # Ensemble size
     nBeads = 35         # Numer of beads per polymer
     return int(minBeads), int(maxBeads)+1, plotData
     
@@ -44,16 +44,17 @@ def partitionFunction(oldZ,completedPolymers,currentPolymerWeight):
     
 # Add bead function
 def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,currentPolymerWeight):
+    import matplotlib.pyplot as plt     # plotting tools
     # Declare global variables
     global diagFile
     global completedPolymers
     global Z
     global oldZ
     
-    candidatePos,candidateAngles = new_bead.positions(existingPos[L-1,:],baseAngles)    # Determine candidate positions for new bead
-    energies = lj_energy.func(existingPos[0:L,:],candidatePos,sigmaSquared,epsilon,bendingEnergy,angleLastBead,candidateAngles,angleDOF,L) # Calculate energies for each candidate position
+    candidatePos,candidateAngles = new_bead.positions(existingPos[L-1,:],baseAngles)    # Determine candidate positions for new bead)
+    energies = lj_energy.func(existingPos[0:L-1,:],candidatePos,sigmaSquared,epsilon,bendingEnergy,angleLastBead,candidateAngles,angleDOF,L) # Calculate energies for each candidate position
     chosenBeadIndex,beadWeight = new_bead.roulette(energies,T) # Choose bead position from candidates and determine bead weight
-    existingPos[L-1,:] = candidatePos[chosenBeadIndex,:] # Add chosen bead position to existing positions
+    existingPos[L,:] = candidatePos[chosenBeadIndex,:] # Add chosen bead position to existing positions
     currentPolymerWeight = beadWeight*currentPolymerWeight # Update current polymer weight
     angleLastBead = candidateAngles[chosenBeadIndex] # Save chosen angle of current bead for bending energy with next bead 
     
@@ -71,8 +72,11 @@ def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,currentPolymer
     # lowLim = 0.11*Z[L]
     
     # Grow new bead if final length has not been reached
-    if L < nBeads:
+    if L < nBeads-1:
         global nPolymers
+        # print(currentPolymerWeight)
+        # plt.plot(existingPos[:,0],existingPos[:,1], 'b')
+        # plt.show
         if currentPolymerWeight>upLim:  # Enrich
             # Declare global variables
             global beadPos
@@ -130,13 +134,12 @@ def simulation(multi,write_mode):
     global Z
     completedPolymers = 0
     nPolymersEnrich = startPolymers
-    angleDOF = 6                               # Amount of different angles the polymer can move in
+    angleDOF = 72                               # Amount of different angles the polymer can move in
     angles = np.linspace(0,2*np.pi,angleDOF)   # Split 2*pi radians up into angleDOF amount of slices
     sigmaSquared = sigma*sigma
     beadPos = np.zeros((nBeads,2),dtype=float)          # initialize all bead positions
     candidatePos = np.zeros((len(angles),2),dtype=float)    # initialize list for all possible positions of the next bead
     angleLastBead = 0
-    total_weight_factors = 1
     nPolymers = startPolymers
     polymerWeights = np.ones((startPolymers*2),dtype=float)                   # initialize all end_to_end distances
     end_to_end_distance_squared = np.zeros((startPolymers*2),dtype=float)     # initialize all end_to_end distances, squared
@@ -149,7 +152,8 @@ def simulation(multi,write_mode):
     while N < nPolymers: # Simulate polymers
         # Variables
         polymerWeightInit = 1   # Initial polymer weight factor
-        L = 1                   # Starting bead
+        L = 2                   # Starting bead
+        beadPos[1,:] = [1,0]
         # Grow beads recursively
         beadPos, polymerWeights[N], N = addBead(L,N,beadPos,candidatePos,angles,angleLastBead,polymerWeightInit)
         # Collect data
@@ -182,6 +186,7 @@ def simulation(multi,write_mode):
     else:
         print("End to end distance: " + str(exp_end_to_end_distance))
         print("Radius of gyration: " + str(exp_radius_of_gyration))
+        print(beadPos)
     return beadPos;
 
 
