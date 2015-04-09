@@ -35,7 +35,7 @@ def user_input():
     T = 0.5               # Temperature
     plotData = 'n'      # Plot data boolean
     startPolymers = 30  # Ensemble size
-    nBeads = 150         # Numer of beads per polymer
+    nBeads = 30         # Numer of beads per polymer
     return int(minBeads), int(maxBeads)+1, plotData
     
 # Partition function
@@ -60,8 +60,8 @@ def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,currentPolymer
     Z[L] = partitionFunction(oldZ[L],completedPolymers,currentPolymerWeight)
     
     if N != 0:
-        upLim = 2*Z[L]
-        lowLim = 1.2*Z[L]
+        upLim = 2*oldZ[L]
+        lowLim = 1.2*oldZ[L]
     else:
         upLim = float('inf')
         lowLim = 0
@@ -80,20 +80,19 @@ def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,currentPolymer
             # Declare global variables
             global beadPos
             global polymerWeights
-            global polymersAdded
             # global nPolymersEnrich
             diagFile.write('upLim reached, clone current polymer. nPolymers: '+str(nPolymers)+'\n') # Write diagnostics to file
-            # nPolymersEnrich = nPolymersEnrich + 1 # Increase population
-            beadPos, polymerWeights[nPolymersEnrich], Ntemp = addBead(L+1,N+1,existingPos,candidatePos,angles,angleLastBead,0.5*currentPolymerWeight) # Clone current polymer and grow clone 
+            diagFile.write(str(polymerWeights))
+            tempN = np.nonzero(polymerWeights == 1)[0][0] # Look for empty locations for a new polymer
+            polymerWeights[tempN] = 0
+            nPolymers = nPolymers + 1
+            beadPos, polymerWeights[tempN], _ = addBead(L+1,tempN,existingPos,candidatePos,angles,angleLastBead,0.5*currentPolymerWeight) # Clone current polymer and grow clone 
             diagFile.write('Done with cloned polymer, continue growing original polymer ('+str(N)+')\n') # Write diagnostics to file
-            # Write diagnostics to file
-            diagFile.write(str(beadPos))
-            if polymerPruned:
-                diagFile.write('Cloned polymer was removed'+'\n')
-                polymerPruned = False
-            else:
-                diagFile.write('Cloned polymer '+str(Ntemp)+' was fully grown'+'\n')
-                polymersAdded = polymersAdded + 1
+            # if polymerPruned:
+            #     diagFile.write('Cloned polymer was removed'+'\n')
+            #     polymerPruned = False
+            # else:
+            #     diagFile.write('Cloned polymer '+str(Ntemp)+' was fully grown'+'\n')
             return addBead(L+1,N,existingPos,candidatePos,angles,angleLastBead,0.5*currentPolymerWeight) # When finished growing cloned polymer, multiply weight original polymer by 0.5 and continue growing
             
         if currentPolymerWeight<lowLim: # Prune
@@ -105,14 +104,14 @@ def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,currentPolymer
                 nPolymers = nPolymers - 1 # Decrease population
                 polymerPruned = True
                 diagFile.write('lowLim reached, polymer removed. nPolymers: '+str(nPolymers)+'\n') # Write diagnostics to file
-                return existingPos, 0, N
+                return existingPos, 1, N
         else:
             # Continue with next bead
             return addBead(L+1,N,existingPos,candidatePos,angles,angleLastBead,currentPolymerWeight)
     completedPolymers = completedPolymers + 1   # Count completed polymers
     oldZ = Z
     diagFile.write('Polymers completed:'+str(completedPolymers)+'\n')
-    N = N + 1 + polymersAdded                                 # Select the next polymer
+    N = N + 1                                 # Select the next polymer
     return existingPos, currentPolymerWeight, N
 
 
@@ -156,6 +155,7 @@ def simulation(multi,write_mode):
         polymerWeightInit = 1   # Initial polymer weight factor
         L = 2                   # Starting bead
         beadPos[1,:] = [1,0]
+        polymerWeights[N] = 0
         # Grow beads recursively
         beadPos, polymerWeights[N], N = addBead(L,N,beadPos,candidatePos,angles,angleLastBead,polymerWeightInit)
         # Collect data
