@@ -80,22 +80,20 @@ def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,currentPolymer
             # Declare global variables
             global beadPos
             global polymerWeights
-            global polymerAdded
-            global nPolymersEnrich
+            global polymersAdded
+            # global nPolymersEnrich
             diagFile.write('upLim reached, clone current polymer. nPolymers: '+str(nPolymers)+'\n') # Write diagnostics to file
-            nPolymersEnrich = nPolymersEnrich + 1 # Increase population
-            beadPos, polymerWeights[nPolymersEnrich], Ntemp = addBead(L+1,nPolymersEnrich,existingPos,candidatePos,angles,angleLastBead,0.5*currentPolymerWeight) # Clone current polymer and grow clone 
+            # nPolymersEnrich = nPolymersEnrich + 1 # Increase population
+            beadPos, polymerWeights[nPolymersEnrich], Ntemp = addBead(L+1,N+1,existingPos,candidatePos,angles,angleLastBead,0.5*currentPolymerWeight) # Clone current polymer and grow clone 
             diagFile.write('Done with cloned polymer, continue growing original polymer ('+str(N)+')\n') # Write diagnostics to file
             # Write diagnostics to file
             diagFile.write(str(beadPos))
             if polymerPruned:
                 diagFile.write('Cloned polymer was removed'+'\n')
-                # Decrease in enrichment population
-                nPolymers = nPolymers + 1 
-                nPolymersEnrich = nPolymersEnrich - 1 
                 polymerPruned = False
             else:
-                diagFile.write('Cloned polymer '+str(nPolymersEnrich)+' was fully grown'+'\n')
+                diagFile.write('Cloned polymer '+str(Ntemp)+' was fully grown'+'\n')
+                polymersAdded = polymersAdded + 1
             return addBead(L+1,N,existingPos,candidatePos,angles,angleLastBead,0.5*currentPolymerWeight) # When finished growing cloned polymer, multiply weight original polymer by 0.5 and continue growing
             
         if currentPolymerWeight<lowLim: # Prune
@@ -114,7 +112,7 @@ def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,currentPolymer
     completedPolymers = completedPolymers + 1   # Count completed polymers
     oldZ = Z
     diagFile.write('Polymers completed:'+str(completedPolymers)+'\n')
-    N = N + 1                                   # Select the next polymer
+    N = N + 1 + polymersAdded                                 # Select the next polymer
     return existingPos, currentPolymerWeight, N
 
 
@@ -134,6 +132,8 @@ def simulation(multi,write_mode):
     global completedPolymers
     global oldZ
     global Z
+    global polymersAdded
+    polymersAdded = 0
     completedPolymers = 0
     nPolymersEnrich = startPolymers
     angleDOF = 6                               # Amount of different angles the polymer can move in
