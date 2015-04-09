@@ -23,8 +23,8 @@ else:
     write_mode="a"
     multi = True
 
-for iii in range(minBeads, maxBeads):
-    existingPos = simulation.simulation(iii,multi,write_mode)
+# for iii in range(minBeads, maxBeads):
+existingPos = simulation.simulation(multi,write_mode)
 
 if plot_data == 'y':                                            # Plot when chosen
     simulation.plot(existingPos)
