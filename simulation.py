@@ -34,13 +34,13 @@ def user_input():
     bendingEnergy = 0.0
     T = 0.5               # Temperature
     plotData = 'n'      # Plot data boolean
-    startPolymers = 30  # Ensemble size
+    startPolymers = 300  # Ensemble size
     nBeads = 30         # Numer of beads per polymer
     return int(minBeads), int(maxBeads)+1, plotData
     
 # Partition function
-def partitionFunction(oldZ,completedPolymers,currentPolymerWeight):
-    return (oldZ*completedPolymers+currentPolymerWeight)/(completedPolymers+1)
+# def partitionFunction(innerZ,completedPolymers,currentPolymerWeight):
+#     return (innerZ*completedPolymers+currentPolymerWeight)/(completedPolymers+1)
     
 # Add bead function
 def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,currentPolymerWeight):
@@ -57,10 +57,17 @@ def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,currentPolymer
     currentPolymerWeight = beadWeight*currentPolymerWeight # Update current polymer weight
     angleLastBead = candidateAngles[chosenBeadIndex] # Save chosen angle of current bead for bending energy with next bead 
     
-    Z[L] = partitionFunction(oldZ[L],completedPolymers,currentPolymerWeight)
+    
+    diagFile.write('OldZ1['+str(L)+']: '+str(oldZ[L])+'\n')
+    diagFile.write('Z1['+str(L)+']: '+str(Z[L])+'\n')
+    tempZ = oldZ[L]
+    diagFile.write('OldZ1a['+str(L)+']: '+str(oldZ[L])+'\n')
+    Z[L] = (tempZ*completedPolymers+currentPolymerWeight)/(completedPolymers+1)
+    diagFile.write('OldZ2['+str(L)+']: '+str(oldZ[L])+'\n')
     
     if N != 0:
-        upLim = 2*oldZ[L]
+        diagFile.write('OldZ['+str(L)+']: '+str(oldZ[L])+'\n')
+        upLim = 2.0*oldZ[L]
         lowLim = 1.2*oldZ[L]
     else:
         upLim = float('inf')
@@ -104,12 +111,13 @@ def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,currentPolymer
                 nPolymers = nPolymers - 1 # Decrease population
                 polymerPruned = True
                 diagFile.write('lowLim reached, polymer removed. nPolymers: '+str(nPolymers)+'\n') # Write diagnostics to file
+                diagFile.write('OldZ['+str(L)+']: '+str(oldZ[L])+'\n')
                 return existingPos, 1, N
         else:
             # Continue with next bead
             return addBead(L+1,N,existingPos,candidatePos,angles,angleLastBead,currentPolymerWeight)
     completedPolymers = completedPolymers + 1   # Count completed polymers
-    oldZ = Z
+    oldZ[:] = Z[:]
     diagFile.write('Polymers completed:'+str(completedPolymers)+'\n')
     N = N + 1                                 # Select the next polymer
     return existingPos, currentPolymerWeight, N
