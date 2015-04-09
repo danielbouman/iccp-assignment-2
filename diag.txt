@@ -1,40 +1,391 @@
-Polymer 0, bead 2, weight: 1.0124843067 lowLim: 0, upLim: inf
-Polymer 0, bead 3, weight: 1.05878905502 lowLim: 0, upLim: inf
-Polymer 0, bead 4, weight: 1.10846022276 lowLim: 0, upLim: inf
-Polymer 0, bead 5, weight: 1.16924511697 lowLim: 0, upLim: inf
-Polymer 0, bead 6, weight: 1.64826542285 lowLim: 0, upLim: inf
-Polymer 0, bead 7, weight: 1.75433161459 lowLim: 0, upLim: inf
-Polymer 0, bead 8, weight: 3.26279966556 lowLim: 0, upLim: inf
-Polymer 0, bead 9, weight: 4.4203628619 lowLim: 0, upLim: inf
-Polymer 0, bead 10, weight: 5.89640929339 lowLim: 0, upLim: inf
-Polymer 0, bead 11, weight: 6.08270046615 lowLim: 0, upLim: inf
-Polymer 0, bead 12, weight: 6.26329946947 lowLim: 0, upLim: inf
-Polymer 0, bead 13, weight: 6.42298791376 lowLim: 0, upLim: inf
-Polymer 0, bead 14, weight: 6.54479639267 lowLim: 0, upLim: inf
-Polymer 0, bead 15, weight: 6.80231777316 lowLim: 0, upLim: inf
-Polymer 0, bead 16, weight: 6.96987447322 lowLim: 0, upLim: inf
-Polymer 0, bead 17, weight: 9.29243990217 lowLim: 0, upLim: inf
-Polymer 0, bead 18, weight: 9.49872058222 lowLim: 0, upLim: inf
-Polymer 0, bead 19, weight: 9.61489848108 lowLim: 0, upLim: inf
-Polymer 0, bead 20, weight: 10.3357257276 lowLim: 0, upLim: inf
-Polymer 0, bead 21, weight: 10.5036341594 lowLim: 0, upLim: inf
-Polymer 0, bead 22, weight: 10.6479149279 lowLim: 0, upLim: inf
-Polymer 0, bead 23, weight: 18.8367334213 lowLim: 0, upLim: inf
-Polymer 0, bead 24, weight: 22.5802602126 lowLim: 0, upLim: inf
-Polymer 0, bead 25, weight: 22.9970437009 lowLim: 0, upLim: inf
-Polymer 0, bead 26, weight: 23.2333437562 lowLim: 0, upLim: inf
-Polymer 0, bead 27, weight: 24.3218771546 lowLim: 0, upLim: inf
-Polymer 0, bead 28, weight: 24.6807964969 lowLim: 0, upLim: inf
-Polymer 0, bead 29, weight: 25.1600672712 lowLim: 0, upLim: inf
-Polymer 0, bead 30, weight: 25.5078133204 lowLim: 0, upLim: inf
-Polymer 0, bead 31, weight: 39.1582146654 lowLim: 0, upLim: inf
-Polymer 0, bead 32, weight: 46.823041187 lowLim: 0, upLim: inf
-Polymer 0, bead 33, weight: 48.8596102341 lowLim: 0, upLim: inf
-Polymer 0, bead 34, weight: 49.5552584822 lowLim: 0, upLim: inf
-Polymer completed. oldZ: [  0.           1.01248431   1.05878906   1.10846022   1.16924512
-   1.64826542   1.75433161   3.26279967   4.42036286   5.89640929
-   6.08270047   6.26329947   6.42298791   6.54479639   6.80231777
-   6.96987447   9.2924399    9.49872058   9.61489848  10.33572573
-  10.50363416  10.64791493  18.83673342  22.58026021  22.9970437
-  23.23334376  24.32187715  24.6807965   25.16006727  25.50781332
-  39.15821467  46.82304119  48.85961023  49.55525848   0.        ]35 beads, done in: 0:00:00.491345
+Polymer 0, bead 2, weight: 1.0909821318 lowLim: 0, upLim: inf
+Polymer 0, bead 3, weight: 1.62371584322 lowLim: 0, upLim: inf
+Polymer 0, bead 4, weight: 1.67239939689 lowLim: 0, upLim: inf
+Polymer 0, bead 5, weight: 1.69644654035 lowLim: 0, upLim: inf
+Polymer 0, bead 6, weight: 1.72639333571 lowLim: 0, upLim: inf
+Polymer 0, bead 7, weight: 1.13598340174 lowLim: 0, upLim: inf
+Polymer 0, bead 8, weight: 1.39665847514 lowLim: 0, upLim: inf
+Polymer 0, bead 9, weight: 1.42426376273 lowLim: 0, upLim: inf
+Polymer 0, bead 10, weight: 1.44363200027 lowLim: 0, upLim: inf
+Polymer 0, bead 11, weight: 1.45848268023 lowLim: 0, upLim: inf
+Polymer 0, bead 12, weight: 1.47812173808 lowLim: 0, upLim: inf
+Polymer 0, bead 13, weight: 1.52892022401 lowLim: 0, upLim: inf
+Polymer 0, bead 14, weight: 2.5372545718 lowLim: 0, upLim: inf
+Polymer 0, bead 15, weight: 2.60735236376 lowLim: 0, upLim: inf
+Polymer 0, bead 16, weight: 2.72117638151 lowLim: 0, upLim: inf
+Polymer 0, bead 17, weight: 2.83189673193 lowLim: 0, upLim: inf
+Polymer 0, bead 18, weight: 3.88128022149 lowLim: 0, upLim: inf
+Polymer 0, bead 19, weight: 4.00890660758 lowLim: 0, upLim: inf
+Polymer 0, bead 20, weight: 4.05512417295 lowLim: 0, upLim: inf
+Polymer 0, bead 21, weight: 4.89862365984 lowLim: 0, upLim: inf
+Polymer 0, bead 22, weight: 8.99740039008 lowLim: 0, upLim: inf
+Polymer 0, bead 23, weight: 10.2984667662 lowLim: 0, upLim: inf
+Polymer 0, bead 24, weight: 10.9882768916 lowLim: 0, upLim: inf
+Polymer 0, bead 25, weight: 11.4204384722 lowLim: 0, upLim: inf
+Polymer 0, bead 26, weight: 11.599531194 lowLim: 0, upLim: inf
+Polymer 0, bead 27, weight: 11.7418374951 lowLim: 0, upLim: inf
+Polymer 0, bead 28, weight: 16.9798510602 lowLim: 0, upLim: inf
+Polymer 0, bead 29, weight: 29.0145853279 lowLim: 0, upLim: inf
+Polymer 0, bead 30, weight: 30.5537908227 lowLim: 0, upLim: inf
+Polymer 0, bead 31, weight: 41.7235549413 lowLim: 0, upLim: inf
+Polymer 0, bead 32, weight: 42.6455063667 lowLim: 0, upLim: inf
+Polymer 0, bead 33, weight: 43.0911477028 lowLim: 0, upLim: inf
+Polymer 0, bead 34, weight: 45.662955846 lowLim: 0, upLim: inf
+Polymer 0, bead 35, weight: 47.5057075318 lowLim: 0, upLim: inf
+Polymer 0, bead 36, weight: 49.6739689161 lowLim: 0, upLim: inf
+Polymer 0, bead 37, weight: 50.580371296 lowLim: 0, upLim: inf
+Polymer 0, bead 38, weight: 116.790820918 lowLim: 0, upLim: inf
+Polymer 0, bead 39, weight: 125.852166519 lowLim: 0, upLim: inf
+Polymer 0, bead 40, weight: 176.877323553 lowLim: 0, upLim: inf
+Polymer 0, bead 41, weight: 193.579119584 lowLim: 0, upLim: inf
+Polymer 0, bead 42, weight: 204.859667646 lowLim: 0, upLim: inf
+Polymer 0, bead 43, weight: 372.750354634 lowLim: 0, upLim: inf
+Polymer 0, bead 44, weight: 406.803668174 lowLim: 0, upLim: inf
+Polymer 0, bead 45, weight: 416.585527938 lowLim: 0, upLim: inf
+Polymer 0, bead 46, weight: 427.819168556 lowLim: 0, upLim: inf
+Polymer 0, bead 47, weight: 437.36743097 lowLim: 0, upLim: inf
+Polymer 0, bead 48, weight: 454.247826158 lowLim: 0, upLim: inf
+Polymer 0, bead 49, weight: 568.611240777 lowLim: 0, upLim: inf
+Polymer 0, bead 50, weight: 769.09094079 lowLim: 0, upLim: inf
+Polymer 0, bead 51, weight: 815.831883133 lowLim: 0, upLim: inf
+Polymer 0, bead 52, weight: 897.527685486 lowLim: 0, upLim: inf
+Polymer 0, bead 53, weight: 955.922531161 lowLim: 0, upLim: inf
+Polymer 0, bead 54, weight: 1349.09334683 lowLim: 0, upLim: inf
+Polymer 0, bead 55, weight: 1378.35727824 lowLim: 0, upLim: inf
+Polymer 0, bead 56, weight: 1394.9234049 lowLim: 0, upLim: inf
+Polymer 0, bead 57, weight: 1468.68505827 lowLim: 0, upLim: inf
+Polymer 0, bead 58, weight: 105.086645039 lowLim: 0, upLim: inf
+Polymer 0, bead 59, weight: 165.190704618 lowLim: 0, upLim: inf
+Polymer 0, bead 60, weight: 360.16357743 lowLim: 0, upLim: inf
+Polymer 0, bead 61, weight: 552.472283113 lowLim: 0, upLim: inf
+Polymer 0, bead 62, weight: 589.127425013 lowLim: 0, upLim: inf
+Polymer 0, bead 63, weight: 2521.81054687 lowLim: 0, upLim: inf
+Polymer 0, bead 64, weight: 4.56501779914e-11 lowLim: 0, upLim: inf
+Polymer 0, bead 65, weight: 5.13727419043e-11 lowLim: 0, upLim: inf
+Polymer 0, bead 66, weight: 1.32705830675e-10 lowLim: 0, upLim: inf
+Polymer 0, bead 67, weight: 1.93686974275e-10 lowLim: 0, upLim: inf
+Polymer 0, bead 68, weight: 2.37684050498e-10 lowLim: 0, upLim: inf
+Polymer 0, bead 69, weight: 1.15438641885e-10 lowLim: 0, upLim: inf
+Polymer 0, bead 70, weight: 4.6081596885e-10 lowLim: 0, upLim: inf
+Polymer 0, bead 71, weight: 6.16386386548e-174 lowLim: 0, upLim: inf
+Polymer 0, bead 72, weight: 2.09718711108e-173 lowLim: 0, upLim: inf
+Polymer 0, bead 73, weight: 8.51914388246e-173 lowLim: 0, upLim: inf
+Polymer 0, bead 74, weight: 1.85179671058e-172 lowLim: 0, upLim: inf
+Polymer 0, bead 75, weight: 2.75922749608e-172 lowLim: 0, upLim: inf
+Polymer 0, bead 76, weight: 4.86371279787e-172 lowLim: 0, upLim: inf
+Polymer 0, bead 77, weight: 5.41980289397e-172 lowLim: 0, upLim: inf
+Polymer 0, bead 78, weight: 6.4702501844e-172 lowLim: 0, upLim: inf
+Polymer 0, bead 79, weight: 1.09347498219e-171 lowLim: 0, upLim: inf
+Polymer 0, bead 80, weight: 1.41452442883e-171 lowLim: 0, upLim: inf
+Polymer 0, bead 81, weight: 1.77795863993e-171 lowLim: 0, upLim: inf
+Polymer 0, bead 82, weight: 3.07433388776e-171 lowLim: 0, upLim: inf
+Polymer 0, bead 83, weight: 5.32619709024e-171 lowLim: 0, upLim: inf
+Polymer 0, bead 84, weight: 5.51145859393e-171 lowLim: 0, upLim: inf
+Polymer 0, bead 85, weight: 5.85431312682e-171 lowLim: 0, upLim: inf
+Polymer 0, bead 86, weight: 7.5095929138e-171 lowLim: 0, upLim: inf
+Polymer 0, bead 87, weight: 8.93903649267e-171 lowLim: 0, upLim: inf
+Polymer 0, bead 88, weight: 1.35093730423e-170 lowLim: 0, upLim: inf
+Polymer 0, bead 89, weight: 3.16387545383e-170 lowLim: 0, upLim: inf
+Polymer 0, bead 90, weight: 6.14084676326e-170 lowLim: 0, upLim: inf
+Polymer 0, bead 91, weight: 1.02049379945e-169 lowLim: 0, upLim: inf
+Polymer 0, bead 92, weight: 2.05184636333e-169 lowLim: 0, upLim: inf
+Polymer 0, bead 93, weight: 2.44263492055e-169 lowLim: 0, upLim: inf
+Polymer 0, bead 94, weight: 6.10637936153e-169 lowLim: 0, upLim: inf
+Polymer 0, bead 95, weight: 7.98981519514e-169 lowLim: 0, upLim: inf
+Polymer 0, bead 96, weight: 8.2835667464e-169 lowLim: 0, upLim: inf
+Polymer 0, bead 97, weight: 1.46881197769e-168 lowLim: 0, upLim: inf
+Polymer 0, bead 98, weight: 2.98795535154e-168 lowLim: 0, upLim: inf
+Polymer 0, bead 99, weight: 4.19695152599e-168 lowLim: 0, upLim: inf
+Polymer 0, bead 100, weight: 6.30750012461e-168 lowLim: 0, upLim: inf
+Polymer 0, bead 101, weight: 9.93529274286e-168 lowLim: 0, upLim: inf
+Polymer 0, bead 102, weight: 1.04613045716e-167 lowLim: 0, upLim: inf
+Polymer 0, bead 103, weight: 1.16857405756e-167 lowLim: 0, upLim: inf
+Polymer 0, bead 104, weight: 1.31709510856e-167 lowLim: 0, upLim: inf
+Polymer 0, bead 105, weight: 1.37953093345e-167 lowLim: 0, upLim: inf
+Polymer 0, bead 106, weight: 1.44917551767e-167 lowLim: 0, upLim: inf
+Polymer 0, bead 107, weight: 2.27778027304e-167 lowLim: 0, upLim: inf
+Polymer 0, bead 108, weight: 2.39873307394e-167 lowLim: 0, upLim: inf
+Polymer 0, bead 109, weight: 2.43763350228e-167 lowLim: 0, upLim: inf
+Polymer 0, bead 110, weight: 2.50328884378e-167 lowLim: 0, upLim: inf
+Polymer 0, bead 111, weight: 2.56660872469e-167 lowLim: 0, upLim: inf
+Polymer 0, bead 112, weight: 3.00365102725e-167 lowLim: 0, upLim: inf
+Polymer 0, bead 113, weight: 2.25902773056e-167 lowLim: 0, upLim: inf
+Polymer 0, bead 114, weight: 2.8932454246e-167 lowLim: 0, upLim: inf
+Polymer 0, bead 115, weight: 3.16089741646e-167 lowLim: 0, upLim: inf
+Polymer 0, bead 116, weight: 3.8649654162e-167 lowLim: 0, upLim: inf
+Polymer 0, bead 117, weight: 4.03766022439e-167 lowLim: 0, upLim: inf
+Polymer 0, bead 118, weight: 3.08494770122e-167 lowLim: 0, upLim: inf
+Polymer 0, bead 119, weight: 6.71615852451e-167 lowLim: 0, upLim: inf
+Polymer 0, bead 120, weight: 1.05502734044e-166 lowLim: 0, upLim: inf
+Polymer 0, bead 121, weight: 1.89271237195e-166 lowLim: 0, upLim: inf
+Polymer 0, bead 122, weight: 3.19933617099e-166 lowLim: 0, upLim: inf
+Polymer 0, bead 123, weight: 3.64604486469e-166 lowLim: 0, upLim: inf
+Polymer 0, bead 124, weight: 4.11471202437e-166 lowLim: 0, upLim: inf
+Polymer 0, bead 125, weight: 5.7096412051e-166 lowLim: 0, upLim: inf
+Polymer 0, bead 126, weight: 7.26602648414e-166 lowLim: 0, upLim: inf
+Polymer 0, bead 127, weight: 7.67075405679e-166 lowLim: 0, upLim: inf
+Polymer 0, bead 128, weight: 8.64473059207e-166 lowLim: 0, upLim: inf
+Polymer 0, bead 129, weight: 1.10104820325e-165 lowLim: 0, upLim: inf
+Polymer 0, bead 130, weight: 1.70311102474e-165 lowLim: 0, upLim: inf
+Polymer 0, bead 131, weight: 1.7739375867e-165 lowLim: 0, upLim: inf
+Polymer 0, bead 132, weight: 1.9378741104e-165 lowLim: 0, upLim: inf
+Polymer 0, bead 133, weight: 1.96682153947e-165 lowLim: 0, upLim: inf
+Polymer 0, bead 134, weight: 1.99823845117e-165 lowLim: 0, upLim: inf
+Polymer 0, bead 135, weight: 2.04385076518e-165 lowLim: 0, upLim: inf
+Polymer 0, bead 136, weight: 2.15959485086e-165 lowLim: 0, upLim: inf
+Polymer 0, bead 137, weight: 2.22804704487e-165 lowLim: 0, upLim: inf
+Polymer 0, bead 138, weight: 5.38758329314e-165 lowLim: 0, upLim: inf
+Polymer 0, bead 139, weight: 6.02457550501e-165 lowLim: 0, upLim: inf
+Polymer 0, bead 140, weight: 6.11966836621e-165 lowLim: 0, upLim: inf
+Polymer 0, bead 141, weight: 6.20018106929e-165 lowLim: 0, upLim: inf
+Polymer 0, bead 142, weight: 6.30246628851e-165 lowLim: 0, upLim: inf
+Polymer 0, bead 143, weight: 1.05405141261e-164 lowLim: 0, upLim: inf
+Polymer 0, bead 144, weight: 2.75497639175e-164 lowLim: 0, upLim: inf
+Polymer 0, bead 145, weight: 4.12945593978e-164 lowLim: 0, upLim: inf
+Polymer 0, bead 146, weight: 4.50542695564e-164 lowLim: 0, upLim: inf
+Polymer 0, bead 147, weight: 9.08536473354e-165 lowLim: 0, upLim: inf
+Polymer 0, bead 148, weight: 1.53257662564e-164 lowLim: 0, upLim: inf
+Polymer 0, bead 149, weight: 1.69353408564e-164 lowLim: 0, upLim: inf
+Polymers completed:1
+Polymer 1, bead 2, weight: 1.00821502411 lowLim: 1.25951829355, upLim: 2.09919715591
+lowLim reached, polymer weight doubled
+Polymer 1, bead 3, weight: 2.04251224757 lowLim: 2.19973685448, upLim: 3.6662280908
+lowLim reached, polymer removed. nPolymers: 29
+Polymer 1, bead 2, weight: 1.00873961986 lowLim: 1.23500291869, upLim: 2.05833819782
+lowLim reached, polymer weight doubled
+Polymer 1, bead 3, weight: 3.37864518507 lowLim: 3.12705553828, upLim: 5.21175923047
+Polymer 1, bead 4, weight: 3.5034215187 lowLim: 3.10549254935, upLim: 5.17582091559
+Polymer 1, bead 5, weight: 3.61799438394 lowLim: 3.18866455457, upLim: 5.31444092429
+Polymer 1, bead 6, weight: 3.65942292672 lowLim: 3.23148975746, upLim: 5.38581626244
+Polymer 1, bead 7, weight: 3.75981251198 lowLim: 2.93747754824, upLim: 4.89579591373
+Polymer 1, bead 8, weight: 3.80217563698 lowLim: 3.11930046727, upLim: 5.19883411212
+Polymer 1, bead 9, weight: 4.00729387308 lowLim: 3.25893458149, upLim: 5.43155763581
+Polymer 1, bead 10, weight: 4.14052289651 lowLim: 3.35049293807, upLim: 5.58415489678
+Polymer 1, bead 11, weight: 5.2894443311 lowLim: 4.0487562068, upLim: 6.74792701133
+Polymer 1, bead 12, weight: 5.43469770871 lowLim: 4.14769166807, upLim: 6.91281944679
+Polymer 1, bead 13, weight: 9.12764118319 lowLim: 6.39393684432, upLim: 10.6565614072
+Polymer 1, bead 14, weight: 9.50870544522 lowLim: 7.22757601021, upLim: 12.045960017
+Polymer 1, bead 15, weight: 9.89181128354 lowLim: 7.49949818838, upLim: 12.4991636473
+Polymer 1, bead 16, weight: 10.0121089608 lowLim: 7.63997120541, upLim: 12.7332853423
+Polymer 1, bead 17, weight: 10.5003541914 lowLim: 7.99935055403, upLim: 13.3322509234
+Polymer 1, bead 18, weight: 16.8797825393 lowLim: 12.4566376565, upLim: 20.7610627608
+Polymer 1, bead 19, weight: 17.3542376526 lowLim: 12.8178865561, upLim: 21.3631442602
+Polymer 1, bead 20, weight: 17.7225868726 lowLim: 13.0666266274, upLim: 21.7777110456
+Polymer 1, bead 21, weight: 18.3267685809 lowLim: 13.9352353444, upLim: 23.2253922407
+Polymer 1, bead 22, weight: 30.4337800006 lowLim: 23.6587082344, upLim: 39.4311803907
+Polymer 1, bead 23, weight: 33.8459349441 lowLim: 26.4866410262, upLim: 44.1444017103
+Polymer 1, bead 24, weight: 36.061729075 lowLim: 28.23000358, upLim: 47.0500059666
+Polymer 1, bead 25, weight: 36.8954768886 lowLim: 28.9895492165, upLim: 48.3159153609
+Polymer 1, bead 26, weight: 48.7368390151 lowLim: 36.2018221254, upLim: 60.3363702091
+Polymer 1, bead 27, weight: 55.9272030057 lowLim: 40.6014243005, upLim: 67.6690405008
+Polymer 1, bead 28, weight: 154.232129278 lowLim: 102.727188203, upLim: 171.211980338
+Polymer 1, bead 29, weight: 187.893596484 lowLim: 130.144909087, upLim: 216.908181812
+Polymer 1, bead 30, weight: 194.808253863 lowLim: 135.217226811, upLim: 225.362044685
+Polymer 1, bead 31, weight: 200.222867538 lowLim: 145.167853488, upLim: 241.946422479
+Polymer 1, bead 32, weight: 215.184929912 lowLim: 154.698261767, upLim: 257.830436279
+Polymer 1, bead 33, weight: 317.213736327 lowLim: 216.182930418, upLim: 360.304884029
+Polymer 1, bead 34, weight: 478.233240008 lowLim: 314.337717512, upLim: 523.896195854
+Polymer 1, bead 35, weight: 2088.7549529 lowLim: 1281.75639626, upLim: 2136.26066043
+Polymer 1, bead 36, weight: 5.84502771575e-14 lowLim: 29.8043813497, upLim: 49.6739689161
+lowLim reached, polymer removed. nPolymers: 28
+Polymer 1, bead 2, weight: 1.01282118667 lowLim: 1.22519417135, upLim: 2.04199028558
+lowLim reached, polymer weight doubled
+Polymer 1, bead 3, weight: 2.10064882435 lowLim: 2.82391706375, upLim: 4.70652843959
+lowLim reached, polymer removed. nPolymers: 27
+Polymer 1, bead 2, weight: 1.02141181032 lowLim: 1.22544417187, upLim: 2.04240695311
+lowLim reached, polymer weight doubled
+Polymer 1, bead 3, weight: 3.34627731276 lowLim: 3.41972491953, upLim: 5.69954153255
+lowLim reached, polymer removed. nPolymers: 26
+Polymer 1, bead 2, weight: 1.0081938613 lowLim: 1.21763840271, upLim: 2.02939733786
+lowLim reached, polymer removed. nPolymers: 25
+Polymer 1, bead 2, weight: 1.5225230504 lowLim: 1.5223330316, upLim: 2.53722171933
+Polymer 1, bead 3, weight: 2.4851122491 lowLim: 3.20092980923, upLim: 5.33488301538
+lowLim reached, polymer weight doubled
+Polymer 1, bead 4, weight: 5.53162251387 lowLim: 4.871719783, upLim: 8.11953297167
+Polymer 1, bead 5, weight: 8.37542340611 lowLim: 6.61958632095, upLim: 11.0326438683
+Polymer 1, bead 6, weight: 8.8559916594 lowLim: 6.92933987437, upLim: 11.5488997906
+Polymer 1, bead 7, weight: 8.98112699024 lowLim: 6.85741496826, upLim: 11.4290249471
+Polymer 1, bead 8, weight: 9.27590240643 lowLim: 7.12519167749, upLim: 11.8753194625
+Polymer 1, bead 9, weight: 9.91069541449 lowLim: 7.57588453944, upLim: 12.6264742324
+Polymer 1, bead 10, weight: 18.279081072 lowLim: 12.6426951122, upLim: 21.0711585204
+Polymer 1, bead 11, weight: 30.2470104785 lowLim: 20.1725843905, upLim: 33.6209739841
+Polymer 1, bead 12, weight: 45.3454125783 lowLim: 29.281093381, upLim: 48.8018223017
+Polymer 1, bead 13, weight: 57.534743567 lowLim: 37.7178145623, upLim: 62.8630242706
+Polymer 1, bead 14, weight: 72.861550576 lowLim: 47.3307183507, upLim: 78.8845305845
+Polymer 1, bead 15, weight: 89.6664444193 lowLim: 57.5496157458, upLim: 95.916026243
+Polymer 1, bead 16, weight: 92.2334684667 lowLim: 59.1600666827, upLim: 98.6001111379
+Polymer 1, bead 17, weight: 183.510614168 lowLim: 114.106043778, upLim: 190.176739629
+Polymer 1, bead 18, weight: 203.488883973 lowLim: 128.321649212, upLim: 213.869415354
+Polymer 1, bead 19, weight: 220.869030817 lowLim: 138.930361768, upLim: 231.550602947
+Polymer 1, bead 20, weight: 289.806150609 lowLim: 180.417003679, upLim: 300.695006132
+Polymer 1, bead 21, weight: 326.952284455 lowLim: 203.138988345, upLim: 338.564980575
+Polymer 1, bead 22, weight: 347.079935753 lowLim: 220.077315569, upLim: 366.795525948
+Polymer 1, bead 23, weight: 396.312382784 lowLim: 251.030750184, upLim: 418.38458364
+Polymer 1, bead 24, weight: 405.807261647 lowLim: 257.599358778, upLim: 429.33226463
+Polymer 1, bead 25, weight: 501.75255703 lowLim: 315.546308826, upLim: 525.910514711
+Polymer 1, bead 26, weight: 624.837105006 lowLim: 393.003174066, upLim: 655.005290111
+Polymer 1, bead 27, weight: 2545.64459667 lowLim: 1547.68747015, upLim: 2579.47911692
+Polymer 1, bead 28, weight: 4.80187425109e-08 lowLim: 51.3635941303, upLim: 85.6059902171
+lowLim reached, polymer removed. nPolymers: 24
+Polymer 1, bead 2, weight: 0.994707050043 lowLim: 1.35799074582, upLim: 2.26331790971
+lowLim reached, polymer weight doubled
+Polymer 1, bead 3, weight: 3.07017037841 lowLim: 3.44256713166, upLim: 5.7376118861
+lowLim reached, polymer weight doubled
+Polymer 1, bead 4, weight: 9.85730591465 lowLim: 8.35024344029, upLim: 13.9170724005
+Polymer 1, bead 5, weight: 11.0629978375 lowLim: 9.94759186299, upLim: 16.5793197716
+Polymer 1, bead 6, weight: 18.7870260631 lowLim: 14.736885575, upLim: 24.5614759584
+Polymer 1, bead 7, weight: 24.6484986954 lowLim: 18.2178067014, upLim: 30.3630111689
+Polymer 1, bead 8, weight: 25.6677338603 lowLim: 18.9632361549, upLim: 31.6053935915
+Polymer 1, bead 9, weight: 32.0206343015 lowLim: 23.0003228506, upLim: 38.3338714177
+Polymer 1, bead 10, weight: 33.3567974811 lowLim: 26.3354260448, upLim: 43.8923767413
+Polymer 1, bead 11, weight: 87.975483915 lowLim: 62.8715825442, upLim: 104.785970907
+Polymer 1, bead 12, weight: 93.7411530656 lowLim: 70.8852385299, upLim: 118.142064216
+Polymer 1, bead 13, weight: 95.1147209779 lowLim: 75.9277398679, upLim: 126.546233113
+Polymer 1, bead 14, weight: 103.217287292 lowLim: 85.5957315508, upLim: 142.659552585
+Polymer 1, bead 15, weight: 104.991222775 lowLim: 91.7695415378, upLim: 152.949235896
+Polymer 1, bead 16, weight: 112.843014995 lowLim: 97.2858423385, upLim: 162.143070564
+Polymer 1, bead 17, weight: 232.563699725 lowLim: 196.591241724, upLim: 327.65206954
+Polymer 1, bead 18, weight: 406.812924594 lowLim: 308.248579363, upLim: 513.747632271
+Polymer 1, bead 19, weight: 712.357261952 lowLim: 496.879538056, upLim: 828.132563426
+Polymer 1, bead 20, weight: 747.094702552 lowLim: 538.465323371, upLim: 897.442205618
+Polymer 1, bead 21, weight: 774.04039012 lowLim: 565.993728244, upLim: 943.322880407
+Polymer 1, bead 22, weight: 1263.65628071 lowLim: 868.232426213, upLim: 1447.05404369
+Polymer 1, bead 23, weight: 1314.93492109 lowLim: 914.476327749, upLim: 1524.12721291
+Polymer 1, bead 24, weight: 1330.4096827 lowLim: 927.045489006, upLim: 1545.07581501
+Polymer 1, bead 25, weight: 1346.67447557 lowLim: 965.777839758, upLim: 1609.62973293
+Polymer 1, bead 26, weight: 1381.54432341 lowLim: 1025.42818108, upLim: 1709.04696846
+Polymer 1, bead 27, weight: 1401.28326172 lowLim: 1614.61369211, upLim: 2691.02282018
+lowLim reached, polymer removed. nPolymers: 23
+Polymer 1, bead 2, weight: 1.01577886774 lowLim: 1.28846269356, upLim: 2.1474378226
+lowLim reached, polymer removed. nPolymers: 22
+Polymer 1, bead 2, weight: 1.01541792218 lowLim: 1.25348210009, upLim: 2.08913683348
+lowLim reached, polymer weight doubled
+Polymer 1, bead 3, weight: 2.05096373373 lowLim: 2.95186180607, upLim: 4.91976967678
+lowLim reached, polymer weight doubled
+Polymer 1, bead 4, weight: 5.9036984585 lowLim: 7.71734079524, upLim: 12.8622346587
+lowLim reached, polymer removed. nPolymers: 21
+Polymer 1, bead 2, weight: 1.00822693954 lowLim: 1.23167721377, upLim: 2.05279535628
+lowLim reached, polymer removed. nPolymers: 20
+Polymer 1, bead 2, weight: 1.31772724834 lowLim: 1.40647495589, upLim: 2.34412492648
+lowLim reached, polymer weight doubled
+Polymer 1, bead 3, weight: 2.68414510307 lowLim: 3.08641796488, upLim: 5.14402994147
+lowLim reached, polymer weight doubled
+Polymer 1, bead 4, weight: 5.42844282924 lowLim: 7.11573609516, upLim: 11.8595601586
+lowLim reached, polymer weight doubled
+Polymer 1, bead 5, weight: 13.3875340072 lowLim: 13.0063163358, upLim: 21.677193893
+Polymer 1, bead 6, weight: 14.2778655229 lowLim: 15.9351621013, upLim: 26.5586035021
+lowLim reached, polymer removed. nPolymers: 19
+Polymer 1, bead 2, weight: 1.00883133033 lowLim: 1.30853627614, upLim: 2.18089379357
+lowLim reached, polymer weight doubled
+Polymer 1, bead 3, weight: 2.04035642285 lowLim: 2.76742283615, upLim: 4.61237139358
+lowLim reached, polymer removed. nPolymers: 18
+Polymer 1, bead 2, weight: 1.02072043215 lowLim: 1.26670039736, upLim: 2.11116732894
+lowLim reached, polymer removed. nPolymers: 17
+Polymer 1, bead 2, weight: 1.01621059894 lowLim: 1.24307655805, upLim: 2.07179426341
+lowLim reached, polymer weight doubled
+Polymer 1, bead 3, weight: 2.05468792509 lowLim: 2.61652417313, upLim: 4.36087362188
+lowLim reached, polymer weight doubled
+Polymer 1, bead 4, weight: 6.74951892075 lowLim: 7.60757940003, upLim: 12.6792990001
+lowLim reached, polymer weight doubled
+Polymer 1, bead 5, weight: 14.4348101253 lowLim: 15.1640442431, upLim: 25.2734070718
+lowLim reached, polymer weight doubled
+Polymer 1, bead 6, weight: 95.8699250152 lowLim: 65.4895360598, upLim: 109.149226766
+Polymer 1, bead 7, weight: 160.474896183 lowLim: 105.393841061, upLim: 175.656401768
+Polymer 1, bead 8, weight: 187.999359917 lowLim: 122.281234027, upLim: 203.802056712
+Polymer 1, bead 9, weight: 193.405057616 lowLim: 127.543195995, upLim: 212.571993324
+Polymer 1, bead 10, weight: 454.385650083 lowLim: 285.799103072, upLim: 476.331838454
+Polymer 1, bead 11, weight: 568.532466887 lowLim: 372.555271404, upLim: 620.925452341
+Polymer 1, bead 12, weight: 1037.56453584 lowLim: 657.981340767, upLim: 1096.63556794
+Polymer 1, bead 13, weight: 1093.69554712 lowLim: 694.181198205, upLim: 1156.96866368
+Polymer 1, bead 14, weight: 1858.42734933 lowLim: 1157.85427538, upLim: 1929.75712563
+Polymer 1, bead 15, weight: 1926.25990198 lowLim: 1201.64071196, upLim: 2002.73451993
+Polymer 1, bead 16, weight: 2231.71350032 lowLim: 1387.67102136, upLim: 2312.7850356
+Polymer 1, bead 17, weight: 2277.77879572 lowLim: 1464.96289829, upLim: 2441.60483049
+Polymer 1, bead 18, weight: 4264.62955743 lowLim: 2712.90202414, upLim: 4521.50337357
+Polymer 1, bead 19, weight: 5510.21478894 lowLim: 3554.56864239, upLim: 5924.28107065
+Polymer 1, bead 20, weight: 6795.38049433 lowLim: 4346.46095828, upLim: 7244.10159714
+Polymer 1, bead 21, weight: 11675.1544743 lowLim: 7288.08954868, upLim: 12146.8159145
+Polymer 1, bead 22, weight: 19145.2252289 lowLim: 11921.2513504, upLim: 19868.7522507
+Polymer 1, bead 23, weight: 22728.1419567 lowLim: 14094.1233379, upLim: 23490.2055632
+Polymer 1, bead 24, weight: 28019.9935038 lowLim: 17275.5188468, upLim: 28792.5314113
+Polymer 1, bead 25, weight: 46701.5316174 lowLim: 28503.8078903, upLim: 47506.3464839
+Polymer 1, bead 26, weight: 47943.1315348 lowLim: 29278.5930114, upLim: 48797.655019
+Polymer 1, bead 27, weight: 48831.6457373 lowLim: 30106.2942884, upLim: 50177.1571474
+Polymer 1, bead 28, weight: 49695.4043352 lowLim: 29842.9243982, upLim: 49738.2073303
+Polymer 1, bead 29, weight: 50185.1823621 lowLim: 30176.1818718, upLim: 50293.636453
+Polymer 1, bead 30, weight: 51216.7263005 lowLim: 30797.6443937, upLim: 51329.4073229
+Polymer 1, bead 31, weight: 58311.2462254 lowLim: 35059.331662, upLim: 58432.2194366
+Polymer 1, bead 32, weight: 70140.5195755 lowLim: 42161.6608762, upLim: 70269.4347936
+Polymer 1, bead 33, weight: 75596.8978396 lowLim: 45466.230169, upLim: 75777.0502816
+Polymer 1, bead 34, weight: 83228.8159592 lowLim: 50094.4584343, upLim: 83490.7640572
+Polymer 1, bead 35, weight: 84489.8547772 lowLim: 51334.7910645, upLim: 85557.9851074
+Polymer 1, bead 36, weight: 85884.3400242 lowLim: 51545.5062052, upLim: 85909.1770086
+Polymer 1, bead 37, weight: 91392.9173365 lowLim: 54866.0986247, upLim: 91443.4977078
+Polymer 1, bead 38, weight: 105663.431953 lowLim: 63468.1336642, upLim: 105780.222774
+Polymer 1, bead 39, weight: 541308.083612 lowLim: 324860.361467, upLim: 541433.935779
+Polymer 1, bead 40, weight: 0.0 lowLim: 106.126394132, upLim: 176.877323553
+lowLim reached, polymer weight doubled
+Polymer 1, bead 41, weight: 0.0 lowLim: 116.14747175, upLim: 193.579119584
+lowLim reached, polymer weight doubled
+Polymer 1, bead 42, weight: 0.0 lowLim: 122.915800587, upLim: 204.859667646
+lowLim reached, polymer removed. nPolymers: 16
+Polymer 1, bead 2, weight: 1.00820326457 lowLim: 1.22646023777, upLim: 2.04410039628
+lowLim reached, polymer weight doubled
+Polymer 1, bead 3, weight: 2.03438856944 lowLim: 2.52889522823, upLim: 4.21482538038
+lowLim reached, polymer removed. nPolymers: 15
+Polymer 1, bead 2, weight: 1.00883387996 lowLim: 1.21853044686, upLim: 2.0308840781
+lowLim reached, polymer removed. nPolymers: 14
+Polymer 1, bead 2, weight: 1.01060211769 lowLim: 1.21562649405, upLim: 2.02604415674
+lowLim reached, polymer weight doubled
+Polymer 1, bead 3, weight: 2.04015478832 lowLim: 2.48854048711, upLim: 4.14756747851
+lowLim reached, polymer removed. nPolymers: 13
+Polymer 1, bead 2, weight: 1.05325773361 lowLim: 1.23976788719, upLim: 2.06627981198
+lowLim reached, polymer removed. nPolymers: 12
+Polymer 1, bead 2, weight: 1.01301712929 lowLim: 1.22769422117, upLim: 2.04615703528
+lowLim reached, polymer removed. nPolymers: 11
+Polymer 1, bead 2, weight: 1.03036558757 lowLim: 1.23206646313, upLim: 2.05344410521
+lowLim reached, polymer weight doubled
+Polymer 1, bead 3, weight: 2.21748384685 lowLim: 2.57476055166, upLim: 4.2912675861
+lowLim reached, polymer removed. nPolymers: 10
+Polymer 1, bead 2, weight: 1.02496035646 lowLim: 1.23100944544, upLim: 2.05168240907
+lowLim reached, polymer weight doubled
+Polymer 1, bead 3, weight: 2.08155336581 lowLim: 2.53631229532, upLim: 4.22718715886
+lowLim reached, polymer removed. nPolymers: 9
+Polymer 1, bead 2, weight: 1.01969969182 lowLim: 1.22732453781, upLim: 2.04554089636
+lowLim reached, polymer removed. nPolymers: 8
+Polymer 1, bead 2, weight: 1.01987174279 lowLim: 1.22558531458, upLim: 2.04264219097
+lowLim reached, polymer weight doubled
+Polymer 1, bead 3, weight: 2.08936297113 lowLim: 2.52177393034, upLim: 4.20295655056
+lowLim reached, polymer removed. nPolymers: 7
+Polymer 1, bead 2, weight: 1.00872422724 lowLim: 1.21802719363, upLim: 2.03004532272
+lowLim reached, polymer removed. nPolymers: 6
+Polymer 1, bead 2, weight: 1.03947715778 lowLim: 1.23269989149, upLim: 2.05449981914
+lowLim reached, polymer weight doubled
+Polymer 1, bead 3, weight: 2.10211409864 lowLim: 2.52215542435, upLim: 4.20359237392
+lowLim reached, polymer weight doubled
+Polymer 1, bead 4, weight: 4.45634872415 lowLim: 6.4775989345, upLim: 10.7959982242
+lowLim reached, polymer weight doubled
+Polymer 1, bead 5, weight: 9.09611552311 lowLim: 13.0396914354, upLim: 21.732819059
+lowLim reached, polymer removed. nPolymers: 5
+Polymer 1, bead 2, weight: 1.35139933723 lowLim: 1.42718954808, upLim: 2.3786492468
+lowLim reached, polymer removed. nPolymers: 4
+Polymer 1, bead 2, weight: 1.60103100747 lowLim: 1.67421337852, upLim: 2.79035563087
+lowLim reached, polymer weight doubled
+Polymer 1, bead 3, weight: 3.34126726161 lowLim: 3.26583806914, upLim: 5.44306344857
+Polymer 1, bead 4, weight: 3.38319926234 lowLim: 5.26871902465, upLim: 8.78119837442
+lowLim reached, polymer weight doubled
+Polymer 1, bead 5, weight: 6.88465871629 lowLim: 10.6506409475, upLim: 17.7510682458
+lowLim reached, polymer weight doubled
+Polymer 1, bead 6, weight: 13.9349435173 lowLim: 41.1057341403, upLim: 68.5095569005
+lowLim reached, polymer weight doubled
+Polymer 1, bead 7, weight: 28.3945255487 lowLim: 69.7336358596, upLim: 116.222726433
+lowLim reached, polymer removed. nPolymers: 3
+Polymer 1, bead 2, weight: 1.03035233011 lowLim: 1.45531808732, upLim: 2.42553014554
+lowLim reached, polymer weight doubled
+Polymer 1, bead 3, weight: 2.43550435096 lowLim: 3.09422164515, upLim: 5.15703607524
+lowLim reached, polymer removed. nPolymers: 2
+Polymer 1, bead 2, weight: 1.043906418 lowLim: 1.35400289446, upLim: 2.25667149077
+lowLim reached, polymer weight doubled
+Polymer 1, bead 3, weight: 2.30251733723 lowLim: 2.92862122491, upLim: 4.88103537485
+lowLim reached, polymer removed. nPolymers: 1
+150 beads, done in: 0:00:00.031836
