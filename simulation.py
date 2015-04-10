@@ -15,12 +15,6 @@ def user_input():
     global plotData
     global startPolymers
     
-    # sigma = input('Sigma value of L-J potential (default: 0.5): ') or 0.8
-    # epsilon = input('Epsilon value of L-J potential (default: 0.5): ') or 0.25
-    # T = input('Temperature, expressed in epsilon (default: 1): ') or 1.0
-    # number_of_beads = input('Amount of beads per polymer: ') or 150
-    # plotData = input('Plot data? (y/n, default: y): ') or 'y'
-    #multi = input('Simulate more than one ensemble? [Y/n]  ') or 'n'
     multi = 'n'
     if multi.lower() == 'y':
         minBeads = input('Mininum number of beads: ') or 3
@@ -29,13 +23,13 @@ def user_input():
         #minBeads = input('Number of beads: ') or 150
         minBeads = 30
         maxBeads = minBeads
-    sigma = 0.8         # Sigma for the Lennard Jones potential
-    epsilon = 0.25      # epsilon for the Lennard Jones potential 
+    sigma = 0.8             # Sigma for the Lennard Jones potential
+    epsilon = 0.25          # epsilon for the Lennard Jones potential 
     bendingEnergy = 0.0
-    T = 0.5               # Temperature
-    plotData = 'n'      # Plot data boolean
-    startPolymers = 1  # Ensemble size
-    nBeads = 150         # Numer of beads per polymer
+    T = 300                 # Temperature
+    plotData = 'n'          # Plot data boolean
+    startPolymers = 1000    # Ensemble size
+    nBeads = 150            # Numer of beads per polymer
     return int(minBeads), int(maxBeads)+1, plotData
     
 # Add bead function
@@ -48,20 +42,18 @@ def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,currentPolymer
     
     candidatePos,candidateAngles = new_bead.positions(existingPos[L-1,:],baseAngles)    # Determine candidate positions for new bead)
     energies = lj_energy.func(existingPos[0:L-1,:],candidatePos,sigmaSquared,epsilon,bendingEnergy,angleLastBead,candidateAngles,angleDOF,L) # Calculate energies for each candidate position
-    chosenBeadIndex,beadWeight = new_bead.roulette(energies,T) # Choose bead position from candidates and determine bead weight
+    chosenBeadIndex,beadWeight = new_bead.roulette(energies,T,L) # Choose bead position from candidates and determine bead weight
     existingPos[L,:] = candidatePos[chosenBeadIndex,:] # Add chosen bead position to existing positions
     currentPolymerWeight = beadWeight*currentPolymerWeight # Update current polymer weight
     angleLastBead = candidateAngles[chosenBeadIndex] # Save chosen angle of current bead for bending energy with next bead 
-    # Partition function
-    Z[L] = (oldZ[L]*completedPolymers+currentPolymerWeight)/(completedPolymers+1)
-    
+    Z[L] = (oldZ[L]*completedPolymers+currentPolymerWeight)/(completedPolymers+1) # Partition function
+    # This makes sure that only the first polymer is grown with the Rosenbluth method
     if N != 0:
-        upLim = 9.5*oldZ[L]/oldZ[2]
-        lowLim = 0.95*oldZ[L]/oldZ[2]
+        upLim = 7.8*oldZ[L]/oldZ[2]
+        lowLim = 0.5*oldZ[L]/oldZ[2]
     else:
         upLim = float('inf')
         lowLim = 0
-        
     # Write to diagnostics information to file
     diagFile.write("Polymer "+str(N)+", bead "+str(L)+", weight: "+ str(currentPolymerWeight)+" lowLim: "+str(lowLim)+", upLim: "+str(upLim)+"\n")
     
@@ -69,23 +61,23 @@ def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,currentPolymer
     if L < nBeads-1:
         global nPolymers
         global polymerPruned
-        # print(currentPolymerWeight)
-        # plt.plot(existingPos[:,0],existingPos[:,1], 'b')
-        # plt.show
-        if currentPolymerWeight>upLim:  # Enrich
+        # When the upper limit is reached enrich the population
+        if currentPolymerWeight>upLim:
             # Declare global variables
             global beadPos
             global polymerWeights
-            diagFile.write('upLim reached, clone current polymer. nPolymers: '+str(nPolymers)+'\n') # Write diagnostics to file
-            # diagFile.write(str(polymerWeights))
-            tempN = np.nonzero(polymerWeights == 1)[0][0] # Look for empty locations for a new polymer
+            # Write diagnostic inforation to file
+            diagFile.write('upLim reached, clone current polymer. nPolymers: '+str(nPolymers)+'\n')
+            # Look for free locations for a new polymer and keep that location occupied
+            tempN = np.nonzero(polymerWeights == 1)[0][0]
             polymerWeights[tempN] = 0
+            # Add a polymer to the population
             nPolymers = nPolymers + 1
-            beadPos, polymerWeights[tempN], _ = addBead(L+1,tempN,existingPos,candidatePos,angles,angleLastBead,0.5*currentPolymerWeight) # Clone current polymer and grow clone 
-            diagFile.write('Done with cloned polymer, continue growing original polymer ('+str(N)+')\n') # Write diagnostics to file
-            return addBead(L+1,N,existingPos,candidatePos,angles,angleLastBead,0.5*currentPolymerWeight) # When finished growing cloned polymer, multiply weight original polymer by 0.5 and continue growing
-            
-        if currentPolymerWeight<lowLim: # Prune
+            beadPos, polymerWeights[tempN], _ = addBead(L+1,tempN,existingPos,candidatePos,angles,angleLastBead,0.5*currentPolymerWeight)
+            diagFile.write('Done with cloned polymer, continue growing original polymer ('+str(N)+')\n')
+            return addBead(L+1,N,existingPos,candidatePos,angles,angleLastBead,0.5*currentPolymerWeight)
+        # When the lower limit is reached, prune the polymer
+        if currentPolymerWeight<lowLim:
             RNG = np.random.random()
             if RNG<0.5: # Double current polymer weight and continue growing
                 diagFile.write('lowLim reached, polymer weight doubled\n')
@@ -95,8 +87,8 @@ def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,currentPolymer
                 polymerPruned = True
                 diagFile.write('lowLim reached, polymer removed. nPolymers: '+str(nPolymers)+'\n') # Write diagnostics to file
                 return existingPos, 1, N
+        # When neither limit is reached, continue growing the polymer
         else:
-            # Continue with next bead
             return addBead(L+1,N,existingPos,candidatePos,angles,angleLastBead,currentPolymerWeight)
     completedPolymers = completedPolymers + 1   # Count completed polymers
     oldZ[:] = Z[:]
