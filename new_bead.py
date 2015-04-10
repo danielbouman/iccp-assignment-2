@@ -18,16 +18,14 @@ def positions(previous_beads_pos, angles):
 
 """
 def roulette(energies,T,L):
-    boltzmann_weights = np.exp(-np.divide(energies,T))   # unnormalized probabilities
+    # Boltzmann weights and probabilities are determined
+    boltzmann_weights = np.exp(-np.divide(energies,T))  
     boltzmann_weights_sum = sum(boltzmann_weights)
-    probabilities = np.divide(boltzmann_weights,boltzmann_weights_sum) # normalize probabilities by dividing by their sum
-    cumsum_probabilities = np.cumsum(probabilities)
-    print('Bead: '+str(L)+', probabilities:\n'+str(probabilities))
-    print('Weights:\n'+str(boltzmann_weights))
+    probabilities = np.divide(boltzmann_weights,boltzmann_weights_sum)
     # Here the final position is selected with the roulette wheel algortim
+    cumsum_probabilities = np.cumsum(probabilities)
     RNG = np.random.random()
     for ii in range(0, len(probabilities)):
         if cumsum_probabilities[ii] > RNG:
-            print('Select: '+str(ii))
             break
     return ii,boltzmann_weights[ii];
