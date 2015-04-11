@@ -64,8 +64,8 @@ def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,currentPolymer
         global polymerPruned
         # When the upper limit is reached enrich the population
         if currentPolymerWeight>upLim:
-            sys.stdout.write("Polymer: %d of %d \r" % (N,nPolymers) )
-            sys.stdout.flush()
+            # sys.stdout.write("Polymer: %d of %d \r" % (N,nPolymers) )
+            # sys.stdout.flush()
             # Declare global variables
             global beadPos
             global polymerWeights
@@ -89,6 +89,8 @@ def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,currentPolymer
                 nPolymers = nPolymers - 1 # Decrease population
                 polymerPruned = True
                 # diagFile.write('lowLim reached, polymer removed. nPolymers: '+str(nPolymers)+'\n') # Write diagnostics to file
+                existingPos[:,:] = 0
+                
                 return existingPos, 1, N
         # When neither limit is reached, continue growing the polymer
         else:
@@ -144,11 +146,12 @@ def simulation(multi,write_mode):
         # Grow beads recursively
         beadPos, polymerWeights[N], N = addBead(L,N,beadPos,candidatePos,angles,angleLastBead,polymerWeightInit)
         # Collect data
+        print(beadPos)
         end_to_end_distance_squared[N-1] = sum(np.square(beadPos[0,:]-beadPos[-1,:]))
         centre_of_mass = sum(beadPos)/nBeads
         radius_of_gyration_squared[N-1] = sum(sum(np.square(beadPos[:,:]-centre_of_mass)))
-        sys.stdout.write("Polymer: %d of %d \r" % (N,nPolymers) )
-        sys.stdout.flush()
+        # sys.stdout.write("Polymer: %d of %d \r" % (N,nPolymers) )
+        # sys.stdout.flush()
 
     # Write diagnostics
     # diagFile.write(str(nBeads) + " beads, done in: " + str(datetime.now() - start_time))
