@@ -27,9 +27,9 @@ def user_input():
     sigma = 0.8             # Sigma for the Lennard Jones potential
     epsilon = 0.25          # epsilon for the Lennard Jones potential 
     bendingEnergy = 0.0
-    T = 300                 # Temperature
+    T = 350                 # Temperature
     plotData = 'n'          # Plot data boolean
-    startPolymers = 20    # Ensemble size
+    startPolymers = 10000    # Ensemble size
     nBeads = 150         # Numer of beads per polymer
     return int(minBeads), int(maxBeads)+1, plotData
     
@@ -53,9 +53,11 @@ def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,currentPolymer
     Z[L] = (oldZ[L]*completedPolymers+currentPolymerWeight)/(completedPolymers+1) # Partition function
     # This makes sure that only the first polymer is grown with the Rosenbluth method
     if N != 0:
-        upLim = 5*oldZ[L]/oldZ[2]
-        lowLim = 1.26*oldZ[L]/oldZ[2]
+        upLim = 8.53*oldZ[L]/oldZ[2]
+        lowLim = 1.16*oldZ[L]/oldZ[2]
     else:
+        if currentPolymerWeight == 0:
+            sys.exit("First polymer (RR) has weight 0")
         upLim = float('inf')
         lowLim = 0
     # Write to diagnostics information to file
@@ -75,7 +77,9 @@ def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,currentPolymer
             # diagFile.write('upLim reached, clone current polymer. nPolymers: '+str(nPolymers)+'\n')
             # diagFile.write(str(existingPos)+'\n'+str(L)+'\n')
             # Look for free locations for a new polymer, and split current polymer
+            # try:
             tempN = np.nonzero(polymerWeights == 1)[0][0]
+
             polymerWeights[tempN] = 0
             nPolymers = nPolymers + 1
             beadPos, polymerWeights[tempN], _ = addBead(L+1,tempN,existingPos,candidatePos,angles,angleLastBead,0.5*currentPolymerWeight)
@@ -110,7 +114,8 @@ def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,currentPolymer
     # print('End to end distance: '+str(np.sqrt(end_to_end_distance_squared[N])))
     # diagFile.write('Polymers completed:'+str(completedPolymers)+'\n')
     # Next polymer
-    N = N + 1
+    # N = N + 1
+    N = np.nonzero(polymerWeights == 1)[0][0]
     return existingPos, currentPolymerWeight, N
 
 
@@ -185,6 +190,7 @@ def simulation(multi,write_mode):
     exp_end_to_end_distance = calculate_expectation_value(polymerWeights,end_to_end_distance)
     exp_end_to_end_distance_squared = calculate_expectation_value(polymerWeights,end_to_end_distance_squared)
     exp_radius_of_gyration = calculate_expectation_value(polymerWeights,radius_of_gyration)
+    exp_radius_of_gyration_squared = calculate_expectation_value(polymerWeights,radius_of_gyration_squared)
     if multi:
         # Save data to file
         save.save(exp_end_to_end_distance_squared,"R_squared",header="",write_mode=write_mode)
@@ -192,7 +198,14 @@ def simulation(multi,write_mode):
     else:
         print("End to end distance: " + str(exp_end_to_end_distance))
         print("Radius of gyration: " + str(exp_radius_of_gyration))
-        print("number of finished POLYMERS: " + str(np.count_nonzero(polymerWeights)))
+        print("End to end distance squared: " + str(exp_end_to_end_distance_squared))
+        print("Radius of gyration squared: " + str(exp_radius_of_gyration_squared))
+        print("End to end distance SD: " + str(np.sqrt(exp_end_to_end_distance_squared-np.square(exp_end_to_end_distance))))
+        print("Radius of gyration SD: " + str(np.sqrt(exp_radius_of_gyration_squared-np.square(exp_radius_of_gyration))))
+        print("Ratio: " + str(exp_end_to_end_distance_squared/exp_radius_of_gyration_squared))
+        polymerWeights[:] = (value for value in polymerWeights if value != 0)
+        print(polymerWeights)
+        # print("number of finished POLYMERS: " + str(np.count_nonzero(polymerWeights)))
     return beadPos;
 
 
