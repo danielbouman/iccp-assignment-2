@@ -19,15 +19,19 @@ def variables():
     global multiplePolymerLengths
     
     multiplePolymerLengths = True
-    minBeads = 108
-    maxBeads = 150 
-    sigma = 0.8             # Sigma for the Lennard Jones potential
+    minBeads = 101
+    maxBeads = 104 
+    sigma = 0.8             # Siagma for the Lennard Jones potential
     epsilon = 0.25          # epsilon for the Lennard Jones potential 
     bendingEnergy = 0.0
     T = 350                 # Temperature
     plotData = 'n'          # Plot data boolean
     startPolymers = 10000   # Ensemble size
-    nBeads = 3              # Numer of beads per polymer
+    nBeads = 150            # Numer of beads per polymer
+    
+    if not multiplePolymerLengths:
+        minBeads = nBeads
+        maxBeads = nBeads
     return int(minBeads), int(maxBeads)+1, plotData
     
 # Add bead function
@@ -48,13 +52,13 @@ def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,currentPolymer
     currentPolymerWeight = beadWeight*currentPolymerWeight # Update current polymer weight
     angleLastBead = candidateAngles[chosenBeadIndex] # Save chosen angle of current bead for bending energy with next bead 
     Z[L] = (oldZ[L]*completedPolymers+currentPolymerWeight)/(completedPolymers+1) # Partition function
-    # This makes sure that only the first polymer is grown with the Rosenbluth method
+    # This makes sure that the first polymer is grown using RR algorithm and subsequent polymers with PERM
     if N != 0:
         upLim = 8.53*oldZ[L]/oldZ[2]
         lowLim = 1.16*oldZ[L]/oldZ[2]
     else:
         if currentPolymerWeight == 0:
-            sys.exit("First polymer (RR) has weight 0")
+            sys.exit("First polymer (RR algorithm) has weight 0, restart simulation.")
         upLim = float('inf')
         lowLim = 0
     # Write to diagnostics information to file
@@ -82,7 +86,6 @@ def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,currentPolymer
             # diagFile.write('Done with cloned polymer, continue growing original polymer ('+str(N)+')\n')
             # diagFile.write(str(existingPos))
             # When done with split polymer, continue growing original polymer
-            oldZ[:] = Z[:]
             return addBead(L+1,N,existingPos,candidatePos,angles,angleLastBead,0.5*currentPolymerWeight)
         # When the lower limit is reached, prune the polymer
         if currentPolymerWeight<lowLim:
@@ -94,7 +97,6 @@ def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,currentPolymer
             else:   
                 # The current bead is removed
                 nPolymers = nPolymers - 1
-                oldZ[:] = Z[:]
                 # diagFile.write('lowLim reached, polymer removed. nPolymers: '+str(nPolymers)+'\n') # Write diagnostics to file
                 return existingPos, 1, N
         # When neither limit is reached, continue growing the polymer

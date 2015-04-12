@@ -14,6 +14,8 @@ np.seterr(divide='ignore', invalid='ignore')
 # Simulation parameters
 minBeads, maxBeads, plot_data = simulation.variables()  # User input for simualation variables
 # Actual simulation
+# print(minBeads)
+# print(maxBeads)
 for iii in range(minBeads, maxBeads):
     existingPos = simulation.start(iii)
 # Plot data

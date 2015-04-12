@@ -1,9 +1,10 @@
 """
 Save determined physical quantities or other data to an external file
-data_array  : data to export
-name        : filename
-header      : optional header string (default: blank line)
-write_mode  : specify write modus e.g. w = overwrite, a = append (default: a)
+data            : data to export
+name            : filename
+header          : optional header string (default: blank line)
+write_mode      : specify write modus e.g. w = overwrite, a = append (default: a)
+optional_data   : optional complementary data corresponding to data input (default: blank)
 """
 ## Import libraries
 import re   # string editing tools
