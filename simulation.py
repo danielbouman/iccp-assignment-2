@@ -17,22 +17,44 @@ def variables():
     global plotData
     global startPolymers
     global multiplePolymerLengths
+    global multipleTemperatures
+    global multipleBendingenergies
     
-    multiplePolymerLengths = True
-    minBeads = 101
-    maxBeads = 104 
     sigma = 0.8             # Siagma for the Lennard Jones potential
     epsilon = 0.25          # epsilon for the Lennard Jones potential 
     bendingEnergy = 0.0
-    T = 350                 # Temperature
-    plotData = 'n'          # Plot data boolean
+    plotData = 'y'          # Plot data boolean
     startPolymers = 10000   # Ensemble size
-    nBeads = 150            # Numer of beads per polymer
+
+    # Single ensemble
+    nBeads = 30
+    T = 10
+
+    # Multiple ensembles with varying polymer length or temperature
+    multiplePolymerLengths = False
+    minBeads = 148
+    maxBeads = 150
     
-    if not multiplePolymerLengths:
-        minBeads = nBeads
-        maxBeads = nBeads
-    return int(minBeads), int(maxBeads)+1, plotData
+    multipleTemperatures = False
+    minT = 0.05
+    maxT = 10
+    stepT = 0.1
+
+    multipleBendingenergies = True
+    minBending = 5
+    maxBending = 10
+    stepBending = 1
+    
+    if multiplePolymerLengths:
+        multipleTemperatures = False
+        multipleBendingenergies = False
+        return int(minBeads), int(maxBeads+1), T, T+1, stepT, bendingEnergy, bendingEnergy+1, 1, plotData
+    elif multipleTemperatures:
+        return int(nBeads), int(nBeads+1), minT, maxT+1, stepT, bendingEnergy, bendingEnergy+1, 1, plotData
+    elif multipleBendingenergies:
+        return int(nBeads), int(nBeads+1), T, T+1, 1, minBending, maxBending, stepBending, plotData
+    else:
+        return int(nBeads), int(nBeads+1), T, T+1, 1, bendingEnergy, bendingEnergy+1, 1, plotData
     
 # Add bead function
 def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,currentPolymerWeight):
@@ -54,8 +76,8 @@ def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,currentPolymer
     Z[L] = (oldZ[L]*completedPolymers+currentPolymerWeight)/(completedPolymers+1) # Partition function
     # This makes sure that the first polymer is grown using RR algorithm and subsequent polymers with PERM
     if N != 0:
-        upLim = 8.53*oldZ[L]/oldZ[2]
-        lowLim = 1.16*oldZ[L]/oldZ[2]
+        upLim = 9.43*oldZ[L]/oldZ[2]
+        lowLim = 1.86*oldZ[L]/oldZ[2]
     else:
         if currentPolymerWeight == 0:
             sys.exit("First polymer (RR algorithm) has weight 0, restart simulation.")
@@ -69,8 +91,8 @@ def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,currentPolymer
         global nPolymers
         # When the upper limit is reached enrich the population
         if currentPolymerWeight>upLim:
-            # sys.stdout.write("Polymer: %d of %d \r" % (N,nPolymers) )
-            # sys.stdout.flush()
+            sys.stdout.write("Polymer: %d of %d \r" % (N,nPolymers) )
+            sys.stdout.flush()
             # Declare global variables
             global beadPos
             global polymerWeights
@@ -115,7 +137,7 @@ def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,currentPolymer
     return existingPos, currentPolymerWeight, N
 
 
-def start(nBeadsVar):    
+def start(nBeadsVar,TVar,bendVar):    
     start_time = datetime.now()
     # Declare global variables
     global sigmaSquared
@@ -134,8 +156,14 @@ def start(nBeadsVar):
     global polymersAdded
     global end_to_end_distance_squared
     global radius_of_gyration_squared
+    global multipleBendingenergies
+    global T
     if multiplePolymerLengths:
         nBeads = nBeadsVar
+    elif multipleTemperatures:
+        T = TVar
+    elif multipleBendingenergies:
+        bendingEnergy = bendVar
     polymersAdded = 0
     completedPolymers = 0
     nPolymersEnrich = startPolymers
@@ -162,10 +190,10 @@ def start(nBeadsVar):
         polymerWeights[N] = 0
         # Grow beads recursively
         beadPos, polymerWeights[N], N = addBead(L,N,beadPos,candidatePos,angles,angleLastBead,polymerWeightInit)
-        # sys.stdout.write("Polymer: %d of %d \r" % (N,nPolymers) )
-        # sys.stdout.flush()
+        sys.stdout.write("Polymer: %d of %d \r" % (N,nPolymers) )
+        sys.stdout.flush()
 
-    # Diagnostic information
+    # Diagnost;ic information
     # diagFile.write(str(nBeads) + " beads, done in: " + str(datetime.now() - start_time))
     # diagFile.close()
     print(str(completedPolymers) + " polymers with " + str(nBeads) + " beads, done in: " + str(datetime.now() - start_time))
@@ -182,10 +210,10 @@ def start(nBeadsVar):
     sd_radius_of_gyration = np.sqrt(exp_radius_of_gyration_squared-np.square(exp_radius_of_gyration))
     
     # Save quantities to external files
-    opt_data_R = str(completedPolymers)+" "+str(nBeads)+" "+str(sd_end_to_end_distance)
-    data.save(exp_end_to_end_distance_squared,"R_squared",header="",write_mode="a",optional_data=opt_data_R)
-    opt_data_G = str(completedPolymers)+" "+str(nBeads)+" "+str(sd_radius_of_gyration)
-    data.save(exp_radius_of_gyration_squared,"radius_of_gyration",header="",write_mode="a",optional_data=opt_data_G)
+    opt_data_R = str(completedPolymers)+" "+str(nBeads)+" "+str(sd_end_to_end_distance)+" "+str(bendingEnergy)
+    data.save(exp_end_to_end_distance_squared,"R_squared_bendVar",header="",write_mode="a",optional_data=opt_data_R)
+    opt_data_G = str(completedPolymers)+" "+str(nBeads)+" "+str(sd_radius_of_gyration)+" "+str(bendingEnergy)
+    data.save(exp_radius_of_gyration_squared,"radius_of_gyration_bendVar",header="",write_mode="a",optional_data=opt_data_G)
     
     
     
@@ -214,3 +242,9 @@ def plot(existingPos):
     plt.plot(existingPos[:,0],existingPos[:,1], '.r')
     #plt.plot(end_to_end_distance)
     plt.show()
+
+def drange(start, stop, step):
+    r = start
+    while r < stop:
+        yield r
+        r += step
