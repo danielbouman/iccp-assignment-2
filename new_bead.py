@@ -1,8 +1,9 @@
 """
-
+This function returns the candidate position from the last bead position. 
+Input:
+previous_beads_pos  : position of the adjacent bead
+angles              : the angles determining the candidate postitions
 """
-
-## Import libraries
 import numpy as np
 def positions(previous_beads_pos, angles):
     offset = 2*np.pi*(np.random.random())               # create random offset of each angle to avoid preferential angles
@@ -14,8 +15,10 @@ def positions(previous_beads_pos, angles):
     possible_rel_prev_beads_pos[:,0] = np.cos(angles)         # calcate x-position relative to previous point
     possible_rel_prev_beads_pos[:,1] = np.sin(angles)         # calcate y-position relative to previous point
     return previous_beads_pos[:] + possible_rel_prev_beads_pos[:,:], angles;
+    
 """
-
+Roulette wheel algortim. This determines the final position of the new bead and the weight of the bead.
+The index of the final bead position from the candidates and the corresponding weight are returned.
 """
 def roulette(energies,T,L):
     # Boltzmann weights and probabilities are determined

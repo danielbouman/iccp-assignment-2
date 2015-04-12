@@ -6,6 +6,10 @@ from datetime import datetime   # timer functions
 import sys
 import save_data as data
 
+"""
+This function defines all the global parameters for the simulation.
+When multiple ensembles are run these are also defined here.
+"""
 def variables():
     # Get global variables
     global nBeads       
@@ -23,14 +27,14 @@ def variables():
     sigma = 0.8             # Siagma for the Lennard Jones potential
     epsilon = 0.25          # epsilon for the Lennard Jones potential 
     bendingEnergy = 0.0
-    plotData = True         # Plot data boolean
+    plotData = False        # Plot data boolean
     startPolymers = 10000   # Ensemble size
 
     # Single ensemble
     nBeads = 30
     T = 1
 
-    # Multiple ensembles with varying polymer length or temperature
+    # Here multiple ensembles with varying polymer length, temperature or bending energy are defined
     multiplePolymerLengths = False
     minBeads = 148
     maxBeads = 150
@@ -56,7 +60,10 @@ def variables():
     else:
         return int(nBeads), int(nBeads+1), T, T+1, 1, bendingEnergy, bendingEnergy+1, 1
     
-# Add bead function
+"""
+Recursive function for growing beads, this is the main part of the simulation.
+Main features: energy calculations, weights calculations, pruning and enrichment.
+"""
 def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,currentPolymerWeight):
     # Declare global variables
     # global diagFile
@@ -99,7 +106,7 @@ def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,currentPolymer
             # Write diagnostic inforation to file
             # diagFile.write('upLim reached, clone current polymer. nPolymers: '+str(nPolymers)+'\n')
             # diagFile.write(str(existingPos)+'\n'+str(L)+'\n')
-            # Look for free locations for a new polymer, and split current polymer
+            # Look for available locations for a new polymer, and split current polymer
             tempN = np.nonzero(polymerWeights == 1)[0][0]
 
             polymerWeights[tempN] = 0
@@ -138,7 +145,10 @@ def addBead(L,N,existingPos,candidatePos,baseAngles,angleLastBead,currentPolymer
     N = np.nonzero(polymerWeights == 1)[0][0]
     return existingPos, currentPolymerWeight, N
 
-
+"""
+Function to start the simuluation. 
+From here the polymers are grown and the quantities of interest are determined and collected.
+"""
 def start(nBeadsVar,TVar,bendVar):    
     start_time = datetime.now()
     # Declare global variables
@@ -146,7 +156,6 @@ def start(nBeadsVar,TVar,bendVar):
     global angleDOF
     global angles
     # global diagFile
-    global nPolymersEnrich
     global startPolymers
     global nPolymers
     global beadPos
@@ -155,20 +164,21 @@ def start(nBeadsVar,TVar,bendVar):
     global completedPolymers
     global oldZ
     global Z
-    global polymersAdded
     global end_to_end_distance_squared
     global radius_of_gyration_squared
     global multipleBendingenergies
     global T
+    
+    # Switch to variable properties when simulating mulitple ensembes
     if multiplePolymerLengths:
         nBeads = nBeadsVar
     elif multipleTemperatures:
         T = TVar
     elif multipleBendingenergies:
         bendingEnergy = bendVar
-    polymersAdded = 0
+        
+    # Value assignment 
     completedPolymers = 0
-    nPolymersEnrich = startPolymers
     angleDOF = 6                              # Amount of different angles the polymer can move in
     angles = np.linspace(0,2*np.pi,angleDOF)   # Split 2*pi radians up into angleDOF amount of slices
     sigmaSquared = sigma*sigma
@@ -176,9 +186,10 @@ def start(nBeadsVar,TVar,bendVar):
     candidatePos = np.zeros((len(angles),2),dtype=float)    # initialize list for all possible positions of the next bead
     angleLastBead = 0
     nPolymers = startPolymers
-    polymerWeights = np.ones((startPolymers*3),dtype=float)                   # initialize all end_to_end distances
-    end_to_end_distance_squared = np.zeros((startPolymers*3),dtype=float)     # initialize all end_to_end distances, squared
-    radius_of_gyration_squared = np.zeros((startPolymers*3),dtype=float)      # initialize all end_to_end distances, squared
+    # Pre-allocation of arrays
+    polymerWeights = np.ones((startPolymers*3),dtype=float)
+    end_to_end_distance_squared = np.zeros((startPolymers*3),dtype=float)
+    radius_of_gyration_squared = np.zeros((startPolymers*3),dtype=float)
     Z = np.zeros((nBeads),dtype=float)
     oldZ = np.zeros((nBeads),dtype=float)
     N = 0   # First polymer
@@ -228,35 +239,29 @@ def start(nBeadsVar,TVar,bendVar):
         opt_data_G = str(completedPolymers)+" "+str(nBeads)+" "+str(sd_radius_of_gyration)+" "+str(bendingEnergy)
         data.save(exp_radius_of_gyration_squared,"radius_of_gyration_bendVar",header="",write_mode="a",optional_data=opt_data_G)
     
-    
-    
-    
-    # print("End to end distance: " + str(exp_end_to_end_distance))
-    # print("Radius of gyration: " + str(exp_radius_of_gyration))
-    # print("End to end distance squared: " + str(exp_end_to_end_distance_squared))
-    # print("Radius of gyration squared: " + str(exp_radius_of_gyration_squared))
-    # print("End to end distance SD: " + str(np.sqrt(exp_end_to_end_distance_squared-np.square(exp_end_to_end_distance))))
-    # print("Radius of gyration SD: " + str(np.sqrt(exp_radius_of_gyration_squared-np.square(exp_radius_of_gyration))))
-    # print("Ratio: " + str(exp_end_to_end_distance_squared/exp_radius_of_gyration_squared))
-    # polymerWeights[:] = (value for value in polymerWeights if value != 0)
-    # print(polymerWeights)
-    # print("number of finished POLYMERS: " + str(np.count_nonzero(polymerWeights)))
     return beadPos;
 
-
+"""
+Function to determine weighted average quantities
+"""
 def calculate_expectation_value(weight_factors,quantities):
-    #weight_factors[np.isnan(weight_factors)] = 0        # replace the weights that are too low for calculations by zero
-    expectation_value_quantity = sum(np.multiply(weight_factors,quantities))/sum(weight_factors)
-    return expectation_value_quantity;
+    return sum(np.multiply(weight_factors,quantities))/sum(weight_factors);
 
-
+"""
+Function to plot bead positions
+"""
 def plot(existingPos):
-    import matplotlib.pyplot as plt     # plotting tools
+    import matplotlib.pyplot as plt
     plt.plot(existingPos[:,0],existingPos[:,1], 'b')
     plt.plot(existingPos[:,0],existingPos[:,1], '.r')
-    #plt.plot(end_to_end_distance)
     plt.show()
 
+"""
+Function returns a range with float steps. Input:
+start   : start Value
+stop    : end value
+step    : step size
+"""
 def drange(start, stop, step):
     r = start
     while r < stop:

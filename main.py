@@ -1,5 +1,5 @@
 """
-
+Main file for Monte carlo simulation of polymers using the PERM algorithm
 """
 ## Import modules
 import simulation
